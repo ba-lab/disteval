@@ -25,7 +25,7 @@ vim cns_solve_env.sh
 ### 6. Increase the value for ‘nrestraints’ (maximum number of restraints it can take)
 Change the code at line 60 of the module `cns_solve_1.3/modules/nmr/readdata`
 ```bash
-vim cns_solve_1.3/modules/nmr/readdata # change 20000 to 200000 (by adding a zero)
+vim modules/nmr/readdata # change 20000 to 200000 (by adding a zero)
 ```
 ### 7. Test CNS installation  
 ```bash
@@ -48,11 +48,18 @@ wget https://raw.githubusercontent.com/multicom-toolbox/CONFOLD/master/confold.p
 
 ### 1. Update paths for the variables '$cns_suite' and '$program_dssp'  
 ```bash
+pwd # Copy this path
 vim confold.pl
 ```
+Original:
 ```perl
-my $program_dssp   = "$DIR_BASE/dssp-2.0.4-linux-amd64";
-my $cns_suite      = "/home/badri/DISTFOLD/cns_solve_1.3";
+my $program_dssp   = "/home/bap54/bin/dssp-2.0.4-linux-amd64";
+my $cns_suite      = "/home/casp11/tools/cns_solve_1.3";
+```
+Corrected:
+```perl
+my $program_dssp   = "OUTPUT_OF_PWD/dssp-2.0.4-linux-amd64";
+my $cns_suite      = "OUTPUT_OF_PWD/cns_solve_1.3";
 ```
 
 ### 2. Line #282 throws errors sometimes, so replace the line
