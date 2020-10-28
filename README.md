@@ -13,12 +13,12 @@
    ```
    chmod +x dssp-2.0.4-linux-amd64
    ```
-1. Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/
+- [x] Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/
     ```
     gunzip TM-score.gz
     chmod +x TM-score
     ```
-1. CONFOLD
+- [x] CONFOLD
     - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
 
 ## Test cases (without model building)
