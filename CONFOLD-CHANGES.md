@@ -1,4 +1,5 @@
-# How to upgrade CONFOLD to accept distances?
+# DISTFOLD
+Updated version of the CONFOLD program to accept distance constraints.
 
 ## Step 1. Install CNS Suite
 
