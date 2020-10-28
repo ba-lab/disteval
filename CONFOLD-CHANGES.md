@@ -1,39 +1,38 @@
 # How to upgrade CONFOLD to accept distances?
 
-## Install CNS Suite
-#### 1. Download CNS suite   
+## Step 1. Install CNS Suite
+
+### 1. Download CNS suite   
 Provide your academic profile related information at http://cns-online.org/cns_request/. An email with (a) link to download, (b) login, and (c) password will be sent to you. Follow the link, possibly http://cns-online.org/download/, and download CNS suite "cns_solve_1.3_all_intel-mac_linux.tar.gz".
-#### 2. Unzip  
+### 2. Unzip  
 ```bash
 tar xzvf cns_solve_1.3_all_intel-mac_linux.tar.gz
 ```
-#### 3. Change directory to cns_solve  
+### 3. Change directory to cns_solve  
 ```bash
 cd cns_solve_1.3
 ```
-#### 4. Unhide the file '.cns_solve_env_sh'  
+### 4. Unhide the file '.cns_solve_env_sh'  
 ```bash
 mv .cns_solve_env_sh cns_solve_env.sh
 ```
-#### 5. Edit path in 'cns_solve_env.sh'  
+### 5. Edit path in 'cns_solve_env.sh'  
 Replace '_CNSsolve_location_' with CNS installation directory. For instance, if your CNS installation path is '/home/user/programs/cns_solve_1.3' replace '_CNSsolve_location_' with this path
 ```bash
 vim cns_solve_env.sh
 ```
-
-#### 6. Increase the value for ‘nrestraints’ (maximum number of restraints it can take)
+### 6. Increase the value for ‘nrestraints’ (maximum number of restraints it can take)
 Change the code at line 60 of the module `cns_solve_1.3/modules/nmr/readdata`
 ```bash
 vim cns_solve_1.3/modules/nmr/readdata # change 20000 to 200000 (by adding a zero)
 ```
-
-#### 7. Test CNS installation  
+### 7. Test CNS installation  
 ```bash
 source cns_solve_env.sh
 cd test 
 ../bin/run_tests -tidy noe*.inp
 ```
-#### 8. Change directory  
+### 8. Change directory  
 ```bash
 cd ../../
 ```
