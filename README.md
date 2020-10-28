@@ -83,6 +83,30 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    min-seq-sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
    ```
 
+### Example 4. Evaluate a CASP14 RR file
+   ```bash
+   wget http://deep.cs.umsl.edu/disteval/static/data/casp14/T1024/RaptorX_RR1
+   wget http://deep.cs.umsl.edu/disteval/static/data/casp14/casp14_pdbs/T1024.pdb
+   python3 ./disteval.py -n ./T1024.pdb -c ./RaptorX_RR1
+   ```
+   Expected output:
+   ```
+   Evaluating distances..
+   min-seq-sep: 12 xL: Top-L/5 {'mae': 1.7837, 'mse': 4.9053, 'rmse': 2.2148, 'count': 78}
+   min-seq-sep: 12 xL: Top-L   {'mae': 2.4797, 'mse': 13.0069, 'rmse': 3.6065, 'count': 392}
+   min-seq-sep: 12 xL: Top-NC  {'mae': 3.6061, 'mse': 16.4059, 'rmse': 4.0504, 'count': 5459}
+   min-seq-sep: 24 xL: Top-L/5 {'mae': 1.7837, 'mse': 4.9053, 'rmse': 2.2148, 'count': 78}
+   min-seq-sep: 24 xL: Top-L   {'mae': 2.4398, 'mse': 12.8404, 'rmse': 3.5834, 'count': 392}
+   min-seq-sep: 24 xL: Top-NC  {'mae': 3.6114, 'mse': 16.4634, 'rmse': 4.0575, 'count': 4906}
+   Evaluating contacts..
+   min-seq-sep: 12 xL: Top-L/5 {'precision': 0.9359, 'count': 78}
+   min-seq-sep: 12 xL: Top-L   {'precision': 0.82143, 'count': 392}
+   min-seq-sep: 12 xL: Top-NC  {'precision': 0.68562, 'count': 633}
+   min-seq-sep: 24 xL: Top-L/5 {'precision': 0.9359, 'count': 78}
+   min-seq-sep: 24 xL: Top-L   {'precision': 0.80357, 'count': 392}
+   min-seq-sep: 24 xL: Top-NC  {'precision': 0.68631, 'count': 577}
+   ```
+
 # Evaluation through 3D modeling using `disteval.py`
 
 ## Prerequisites
