@@ -37,37 +37,29 @@ cd test
 cd ../../
 ```
 
-## Configure and test 'distfold.pl'  
-#### 1. Update paths for the variables '$cns_suite' and '$program_dssp'  
+## Step 2. Download CONFOLD script
+
+```
+wget https://raw.githubusercontent.com/multicom-toolbox/CONFOLD/master/confold.pl
+```
+
+## Step 3. Update the `confold.pl` script
+
+### 1. Update paths for the variables '$cns_suite' and '$program_dssp'  
 ```bash
-vim distfold.pl
+vim confold.pl
 ```
 ```perl
 my $program_dssp   = "$DIR_BASE/dssp-2.0.4-linux-amd64";
 my $cns_suite      = "/home/badri/DISTFOLD/cns_solve_1.3";
 ```
-#### 2. Test  
-##### Example with distances as input (1a3aA)  
-a. Build models  
-```bash
-cd test
-rm -r output-1a3aA
-perl ../distfold.pl -rr ./1a3aA.dist.rr -ss ./1a3aA.ss_sa -o ./output-1a3aA -mcount 20 -selectrr 1.0L
-```
-b. Evaluate the models
-```bash
-perl ./eval-using-tmscore.pl 1guu.pdb output-1guu/ all header
-```
-##### Example with contacts as input (1guu)  
 
-```bash
-perl ../confold.pl -seq ./1guu.fasta -rr ./1guu.rr -o ./output-1guu -mcount 20 -selectrr all
+### 2. Fix the line #282
+Line #282 throws errors sometimes
 ```
-
-```perl
-# Line #282 throws errors sometimes
+# Replace the following line:
 system_cmd("./job.sh", "job.log");
-# Replace with:
+# with:
 `./job.sh > job.log`;
 ```
 
@@ -158,4 +150,23 @@ perl ../distfold.pl -rr ./1guu.rr -ss ./1guu.ss -o ./output-1guu -mcount 20 -sel
 b. Evaluate the models
 ```bash
 perl ./eval-using-tmscore.pl 1a3aA.pdb output-1a3aA all header
+```
+
+
+#### 2. Test  
+##### Example with distances as input (1a3aA)  
+a. Build models  
+```bash
+cd test
+rm -r output-1a3aA
+perl ../distfold.pl -rr ./1a3aA.dist.rr -ss ./1a3aA.ss_sa -o ./output-1a3aA -mcount 20 -selectrr 1.0L
+```
+b. Evaluate the models
+```bash
+perl ./eval-using-tmscore.pl 1guu.pdb output-1guu/ all header
+```
+##### Example with contacts as input (1guu)  
+
+```bash
+perl ../confold.pl -seq ./1guu.fasta -rr ./1guu.rr -o ./output-1guu -mcount 20 -selectrr all
 ```
