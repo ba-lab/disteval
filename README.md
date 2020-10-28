@@ -22,10 +22,13 @@
     - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
 
 ## Test cases (without model building)
+Download all the files in the test folder, for example:
+```
+wget 
+```
+
 1. Evaluate a predicted RR contacts file
    ```
-   wget 
-   wget 
    python3 disteval.py 
    ```
    Expected output:
