@@ -162,15 +162,19 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    ```
 
 ### Example 3. Predicted distance including local distances
-```
-python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 2 -t 12
-```
+   ```
+   python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 2 -t 12
+   ```
 
-Expected output:
-```
-
-
-```
+   Expected output:
+   ```
+   TM-score RMSD    GDT-TS MODEL
+   0.107    37.610  0.155  extended.pdb
+   0.253    10.230  0.340  1guuA_11.pdb
+   ...
+   0.681     3.349  0.775  1guuA_13.pdb
+   0.684     2.330  0.795  1guuA_3.pdb
+   ```
 
 1. predicted distances with high seq sep + SS
 1. native dmap
