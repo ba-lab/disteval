@@ -8,33 +8,14 @@ Protein inter-residue contact and distance prediction is a key intermediate step
 <img src="disteval.png" alt="DISTEVAL BANNER" width=500/>
 </p>
 
-# Prerequisites (for the downloadable version)
+# Distance/contact evaluation using the downloadable version
 
-## Prerequisites for distance and contact evaluation
+## Prerequisites
 - [x] Python3
 - [x] Numpy
 - [x] Scikit-learn
 
-## Prerequisites for building 3D models
-- [x] Install csh
-   ```
-   sudo apt install csh
-   ```
-- [x] Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
-   ```
-   chmod +x dssp-2.0.4-linux-amd64
-   ```
-- [x] Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/
-    ```
-    gunzip TM-score.gz
-    chmod +x TM-score
-    ```
-- [x] CONFOLD
-    - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
-
-# Test
-
-## Test distance and contact evaluation
+## Test
 
 Download all the files in the test folder, for example:
    ```
@@ -105,7 +86,26 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
    ```
 
-## Test distance/contact-guided model building)
+# Distance/contact evaluation through distance/contact-guided 3D modeling
+
+## Prerequisites
+- [x] Install csh
+   ```
+   sudo apt install csh
+   ```
+- [x] Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
+   ```
+   chmod +x dssp-2.0.4-linux-amd64
+   ```
+- [x] Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/
+    ```
+    gunzip TM-score.gz
+    chmod +x TM-score
+    ```
+- [x] CONFOLD
+    - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
+
+## Test
 1. predicted contacts + SS
 1. predicted distances with high seq sep + SS
 1. native dmap
