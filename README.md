@@ -21,12 +21,12 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
 ## Test
 
 ### Example 0. See help
-   ```
+   ```bash
    python3 ./disteval.py -h
    ```
 
 ### Example 1. Evaluate a predicted RR contacts file
-   ```
+   ```bash
    python3 ./disteval.py -n ./test/1guuA.pdb -c ./test/1guuA.contact.rr
    ```
    Expected output:
@@ -40,7 +40,7 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    min-seq-sep: 24 xL: Top-NC  {'precision': 1.0, 'count': 1}
    ```
 ### Example 2. Evaluate a predicted distance map
-   ```
+   ```bash
    python3 ./disteval.py -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy
    ```
    Expected output:
@@ -61,7 +61,7 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    min-seq-sep: 24 xL: Top-NC  {'precision': 0.38462, 'count': 13}
    ```
 ### Example 3. Evaluate trRosetta prediction
-   ```
+   ```bash
    python3 ./disteval.py -n ./test/1guuA.pdb -r ./test/1guuA.npz 
    ```
    Expected output:
@@ -87,21 +87,21 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
 
 ## Prerequisites
 - [x] Install csh
-   ```
+   ```bash
    sudo apt install csh
    ```
 - [x] Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
-   ```
+   ```bash
    chmod +x dssp-2.0.4-linux-amd64
    ```
 - [x] Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/TMscore.gz
-    ```
+    ```bash
     wget https://zhanglab.ccmb.med.umich.edu/TM-score/TMscore.gz
     gunzip TMscore.gz
     chmod +x TMscore
     ```
-- [x] CONFOLD
-    - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
+- [x] DISTFOLD
+    - Follow instructions [here](DISTFOLD.md) to download DISTFOLD, an updated version of CONFOLD.
 
 ## Test
 1. predicted contacts + SS
