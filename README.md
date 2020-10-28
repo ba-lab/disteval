@@ -22,7 +22,7 @@
 - [x] CONFOLD
     - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
 
-# Test cases
+# Test
 
 ## Test distance and contact evaluation
 
