@@ -1,10 +1,11 @@
 # DISTEVAL
 
-## Prerequisites (for distance and contact evaluation)
+# Prerequisites
+## Prerequisites for distance and contact evaluation
 - [x] Python3
 - [x] Numpy
 
-## Prerequisites (for building 3D models)
+## Prerequisites for building 3D models
 - [x] Install csh
    ```
    sudo apt install csh
@@ -21,13 +22,16 @@
 - [x] CONFOLD
     - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
 
-## Test cases (without model building)
+# Test cases
+
+## Test distance and contact evaluation
+
 Download all the files in the test folder, for example:
    ```
    wget https://raw.githubusercontent.com/ba-lab/disteval/main/test/1guuA.contact.rr
    ```
 
-1. **Evaluate a predicted RR contacts file**
+### Evaluate a predicted RR contacts file
    ```
    python3 ../disteval-using-confold.py -n 1guuA.pdb -c 1guuA.contact.rr
    ```
@@ -41,7 +45,7 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-L   {'precision': 1.0, 'count': 1}
    sep: 24 xL: Top-NC  {'precision': 1.0, 'count': 1}
    ```
-1. **Evaluate a predicted distance map**
+### Evaluate a predicted distance map
    ```
    python3 ../disteval-using-confold.py -n 1guuA.pdb -d 1guuA.predicted.npy
    ```
@@ -63,7 +67,7 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-L   {'precision': 0.38462, 'count': 13}
    sep: 24 xL: Top-NC  {'precision': 0.38462, 'count': 13}
    ```
-1. **Evaluate trRosetta prediction**
+### Evaluate trRosetta prediction
    ```
    python3 ../disteval-using-confold.py -n 1guuA.pdb -r 1guuA.npz 
    ```
@@ -86,8 +90,7 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
    ```
 
-
-## Test cases (with model building)
+## Test distance/contact-guided model building)
 1. predicted contacts + SS
 1. predicted distances with high seq sep + SS
 1. native dmap
