@@ -4,7 +4,7 @@ Protein inter-residue contact and distance prediction is a key intermediate step
 
 Webserver: [http://deep.cs.umsl.edu/disteval/](http://deep.cs.umsl.edu/disteval/)
 
-<img src="disteval.png" alt="DISTEVAL BANNER" align = "center" width=400/>
+<img src="disteval.png" alt="DISTEVAL BANNER" align = "middle" width=400/>
 
 # Prerequisites
 ## Prerequisites for distance and contact evaluation
