@@ -19,6 +19,7 @@ mv .cns_solve_env_sh cns_solve_env.sh
 ### 5. Edit path in 'cns_solve_env.sh'  
 Replace '_CNSsolve_location_' with CNS installation directory. For instance, if your CNS installation path is '/home/user/programs/cns_solve_1.3' replace '_CNSsolve_location_' with this path
 ```bash
+pwd
 vim cns_solve_env.sh
 ```
 ### 6. Increase the value for ‘nrestraints’ (maximum number of restraints it can take)
