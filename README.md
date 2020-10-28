@@ -1,7 +1,7 @@
 # DISTEVAL
 
 ## Prerequisites (for distance and contact evaluation)
-1. Python3
+- [x] Python3
 1. Numpy
 
 ## Prerequisites (for building 3D models)
