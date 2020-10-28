@@ -23,9 +23,9 @@
 
 ## Test cases (without model building)
 Download all the files in the test folder, for example:
-```
-wget 
-```
+   ```
+   wget https://raw.githubusercontent.com/ba-lab/disteval/main/test/1guuA.contact.rr
+   ```
 
 1. Evaluate a predicted RR contacts file
    ```
