@@ -1,5 +1,5 @@
 '''
-Authors: Badri Adhikari, Jamie Lea, Bikash Shrestha, Jie Hou, and Matt Bernardini
+Authors: Badri Adhikari, Jamie Lea, Bikash Shrestha, Jie Hou, and Matthew Bernardini
 University of Missouri-St. Louis, 10-25-2020
 
 File: Reconstruct 3D models with CONFOLD using a predicted distance map and evaluate using TM-score
