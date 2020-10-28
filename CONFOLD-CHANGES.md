@@ -1,3 +1,4 @@
+# How to upgrade CONFOLD to accept distances?
 
 ## Install CNS Suite
 #### 1. Download CNS suite   
