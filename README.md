@@ -27,15 +27,21 @@ Download all the files in the test folder, for example:
    wget https://raw.githubusercontent.com/ba-lab/disteval/main/test/1guuA.contact.rr
    ```
 
-1. Evaluate a predicted RR contacts file
+1. **Evaluate a predicted RR contacts file**
    ```
-   python3 disteval.py 
+   python3 ../disteval-using-confold.py -n 1guuA.pdb -c 1guuA.contact.rr
    ```
    Expected output:
    ```
-   
+   Evaluating contacts..
+   sep: 12 xL: Top-L/5 {'precision': 1.0, 'count': 9}
+   sep: 12 xL: Top-L   {'precision': 1.0, 'count': 9}
+   sep: 12 xL: Top-NC  {'precision': 1.0, 'count': 9}
+   sep: 24 xL: Top-L/5 {'precision': 1.0, 'count': 1}
+   sep: 24 xL: Top-L   {'precision': 1.0, 'count': 1}
+   sep: 24 xL: Top-NC  {'precision': 1.0, 'count': 1}
    ```
-1. Evaluate a predicted distance map
+1. **Evaluate a predicted distance map**
    ```
    python3 ../disteval-using-confold.py -n 1guuA.pdb -d 1guuA.predicted.npy
    ```
@@ -57,7 +63,29 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-L   {'precision': 0.38462, 'count': 13}
    sep: 24 xL: Top-NC  {'precision': 0.38462, 'count': 13}
    ```
-1. Evaluate trRosetta prediction
+1. **Evaluate trRosetta prediction**
+   ```
+   python3 ../disteval-using-confold.py -n 1guuA.pdb -r 1guuA.npz 
+   ```
+   Expected output:
+   ```
+   Evaluating distances..
+   sep: 12 xL: Top-L/5 {'mae': 0.5485, 'mse': 0.5375, 'rmse': 0.7331, 'count': 10}
+   sep: 12 xL: Top-L   {'mae': 0.6789, 'mse': 0.7678, 'rmse': 0.8762, 'count': 50}
+   sep: 12 xL: Top-NC  {'mae': 1.2951, 'mse': 3.8733, 'rmse': 1.9681, 'count': 741}
+   sep: 24 xL: Top-L/5 {'mae': 0.537, 'mse': 0.4237, 'rmse': 0.6509, 'count': 10}
+   sep: 24 xL: Top-L   {'mae': 0.6691, 'mse': 0.6725, 'rmse': 0.8201, 'count': 50}
+   sep: 24 xL: Top-NC  {'mae': 1.2281, 'mse': 3.2863, 'rmse': 1.8128, 'count': 351}
+
+   Evaluating contacts..
+   sep: 12 xL: Top-L/5 {'precision': 1.0, 'count': 10}
+   sep: 12 xL: Top-L   {'precision': 0.8, 'count': 30}
+   sep: 12 xL: Top-NC  {'precision': 0.8, 'count': 30}
+   sep: 24 xL: Top-L/5 {'precision': 1.0, 'count': 10}
+   sep: 24 xL: Top-L   {'precision': 0.84615, 'count': 13}
+   sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
+   ```
+
 
 ## Test cases (with model building)
 1. predicted contacts + SS
