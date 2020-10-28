@@ -8,8 +8,8 @@ Protein inter-residue contact and distance prediction is a key intermediate step
 <img src="disteval.png" alt="DISTEVAL BANNER" width=500/>
 </p>
 
-# Prerequisites
-For the downloadable version.
+# Prerequisites (for the downloadable version)
+
 ## Prerequisites for distance and contact evaluation
 - [x] Python3
 - [x] Numpy
