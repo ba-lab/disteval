@@ -158,7 +158,6 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    ...
    0.681     2.528  0.785  1guuA_6.pdb
    0.681     2.489  0.790  1guuA_9.pdb
-
    ```
 
 ### Example 3. Predicted distance map (up to 12Å) including local distances
