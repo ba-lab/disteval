@@ -13,6 +13,7 @@ For the downloadable version.
 ## Prerequisites for distance and contact evaluation
 - [x] Python3
 - [x] Numpy
+- [x] Scikit-learn
 
 ## Prerequisites for building 3D models
 - [x] Install csh
