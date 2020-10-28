@@ -52,5 +52,5 @@ wget https://raw.githubusercontent.com/multicom-toolbox/CONFOLD/master/test/inpu
 wget https://raw.githubusercontent.com/multicom-toolbox/CONFOLD/master/test/input/1guu.rr
 wget https://raw.githubusercontent.com/multicom-toolbox/CONFOLD/master/test/input/1guu.ss
 # This will take one or two minutes
-perl ./confold.pl -seq ./1guu.fasta -rr ./1guu.rr -ss ./1guu.ss -o ./output-1guu -mcount 20 -selectrr 1.0L
+perl ./distfold.pl -seq ./1guu.fasta -rr ./1guu.rr -ss ./1guu.ss -o ./output-1guu -mcount 20 -selectrr 1.0L
 ```
