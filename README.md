@@ -97,8 +97,9 @@ Download all the files in the test folder, for example:
    ```
    chmod +x dssp-2.0.4-linux-amd64
    ```
-- [x] Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/
+- [x] Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/TMscore.gz
     ```
+    wget https://zhanglab.ccmb.med.umich.edu/TM-score/TMscore.gz
     gunzip TM-score.gz
     chmod +x TM-score
     ```
