@@ -8,7 +8,7 @@ Protein inter-residue contact and distance prediction is a key intermediate step
 <img src="disteval.png" alt="DISTEVAL BANNER" width=500/>
 </p>
 
-# Distance/contact evaluation using the downloadable version
+# Distance/contact evaluation using the `disteval.py`
 
 ## Prerequisites
 - [x] Python3
@@ -86,7 +86,7 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
    ```
 
-# Distance/contact evaluation through distance/contact-guided 3D modeling
+# Evaluation through distance/contact-guided 3D modeling using `disteval.py`
 
 ## Prerequisites
 - [x] Install csh
