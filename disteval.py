@@ -42,8 +42,8 @@ def get_args():
 args = get_args()
 print(args)
 
-TM = '/home/badri/disteval-using-confold/TMscore'
-CONFOLD = '/home/badri/disteval-using-confold/confold.pl'
+TM = os.path.dirname(os.path.abspath(__file__)) + '/TMscore'
+DISTFOLD = os.path.dirname(os.path.abspath(__file__)) + '/distfold.pl'
 
 native     = None
 file_fasta = None
@@ -525,16 +525,16 @@ print('Restraints (head):')
 os.system('head ' + file_rr)
 
 if restraint_count < 1:
-    print('ERROR!! No restraints to pass on to CONFOLD! Exiting..')
+    print('ERROR!! No restraints to pass on to DISTFOLD! Exiting..')
     sys.exit(1)
 
 print('')
-print('Run CONFOLD')
+print('Run DISTFOLD')
 ssparam = ''
 if ss is not None: ssparam = ' -ss ' + ss
-status = os.system(f"perl {CONFOLD} -seq {file_fasta} -rr {file_rr} -o {job_dir} -mcount 20 -selectrr all" + ssparam)
+status = os.system(f"perl {DISTFOLD} -seq {file_fasta} -rr {file_rr} -o {job_dir} -mcount 20 -selectrr all" + ssparam)
 if status != 0:
-    sys.exit('ERROR!! Could not executed CONFOLD!')
+    sys.exit('ERROR!! Could not executed DISTFOLD!')
 
 if not os.path.exists(native):
     sys.exit()
