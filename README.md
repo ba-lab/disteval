@@ -5,17 +5,15 @@
 1. Numpy
 
 ## Prerequisites (for building 3D models)
-1. csh
+1. Install csh
    ```
    sudo apt install csh
    ```
-1. DSSP 2.0.4
-   - Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
+1. Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
    ```
    chmod +x dssp-2.0.4-linux-amd64
    ```
-1. TM-score 
-    - Download from https://zhanglab.ccmb.med.umich.edu/TM-score/
+1. Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/
     ```
     gunzip TM-score.gz
     chmod +x TM-score
