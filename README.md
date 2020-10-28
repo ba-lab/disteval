@@ -36,6 +36,19 @@ Download all the files in the test folder, for example:
    
    ```
 1. Evaluate a predicted distance map
+   ```
+   python3 ../disteval-using-confold.py -n 1guuA.pdb -d 1guuA.predicted.npy
+   ```
+   Expected output:
+   ```
+   ...
+   sep: 24 xL: Top-L/5 {'mae': 1.8154, 'mse': 4.6469, 'rmse': 2.1557, 'count': 10}
+   sep: 24 xL: Top---L {'mae': 2.1541, 'mse': 8.1816, 'rmse': 2.8603, 'count': 50}
+   ...
+   sep: 24 xL: Top-L/5 0.5
+   sep: 24 xL: Top---L 0.38462
+   ...
+   ```
 1. Evaluate trRosetta prediction
 
 ## Test cases (with model building)
