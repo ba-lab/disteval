@@ -31,7 +31,7 @@ Download all the files in the test folder, for example:
    wget https://raw.githubusercontent.com/ba-lab/disteval/main/test/1guuA.contact.rr
    ```
 
-### Evaluate a predicted RR contacts file
+### Example 1. Evaluate a predicted RR contacts file
    ```
    python3 ../disteval-using-confold.py -n 1guuA.pdb -c 1guuA.contact.rr
    ```
@@ -45,7 +45,7 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-L   {'precision': 1.0, 'count': 1}
    sep: 24 xL: Top-NC  {'precision': 1.0, 'count': 1}
    ```
-### Evaluate a predicted distance map
+### Example 2. Evaluate a predicted distance map
    ```
    python3 ../disteval-using-confold.py -n 1guuA.pdb -d 1guuA.predicted.npy
    ```
@@ -67,7 +67,7 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-L   {'precision': 0.38462, 'count': 13}
    sep: 24 xL: Top-NC  {'precision': 0.38462, 'count': 13}
    ```
-### Evaluate trRosetta prediction
+### Example 3. Evaluate trRosetta prediction
    ```
    python3 ../disteval-using-confold.py -n 1guuA.pdb -r 1guuA.npz 
    ```
