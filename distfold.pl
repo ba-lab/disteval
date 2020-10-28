@@ -11,8 +11,8 @@ use Getopt::Long;
 use Scalar::Util qw(looks_like_number);
 
 # Location of CNSsuite and DSSP
-my $program_dssp   = abs_path($0)."/dssp-2.0.4-linux-amd64";
-my $cns_suite      = abs_path($0)."/cns_solve_1.3";
+my $program_dssp   = dirname(abs_path($0))."/dssp-2.0.4-linux-amd64";
+my $cns_suite      = dirname(abs_path($0))."/cns_solve_1.3";
 my $cns_executable = "$cns_suite/intel-x86_64bit-linux/bin/cns_solve";
 
 # User inputs 
@@ -114,7 +114,9 @@ foreach my $stage (sort keys %stage_list){
 		confess "ERROR! Stage 1 top model not found! Something went wrong!" if not -f "$dir_out/stage1/${id}_model1.pdb";
 		system_cmd("cp $dir_out/stage1/extended.* ./");
 		system_cmd("cp $dir_out/stage1/$id.fasta  ./");
-		system_cmd("cp $dir_out/stage1/$id.ss     ./");
+        if (-e "$dir_out/stage1/$id.ss"){ 
+            system_cmd("cp $dir_out/stage1/$id.ss ./");
+        }
 	}
 	contact_restraints($stage);
 	sec_restraints($stage);
@@ -191,9 +193,9 @@ sub process_parameters{
 		# Sort rr file by confidence
 		system_cmd("rm -f sorted.rr");
 		# Keep contact rows only
-		system_cmd("sed -i '' '/^[A-Z]/d' $file_rr");
+		system_cmd("sed -i '/^[A-Z]/d' $file_rr");
 		# Some files have leading white spaces
-		system_cmd("sed -i '' 's/^ *//' $file_rr");
+		system_cmd("sed -i 's/^ *//' $file_rr");
 		# Stable sort with -s option, i.e. maintain order in case confidence are equal
 		system_cmd("sort -nr -s -k5 $file_rr > sorted.rr");
 		system_cmd("rm -f $file_rr");
@@ -1846,10 +1848,10 @@ sub calc_dist{
 }
 
 sub rr2contacts_hash{
-	my $file_rr = shift;
-	my $count = shift;
-	my $hashvalue = shift;
-	my $seq_sep = 2;
+    my $file_rr = shift;
+    my $seq_sep = shift;
+    my $count = shift;
+    my $hashvalue = shift;
 	confess "ERROR! file_rr $file_rr does not exist!" if not -f $file_rr;
 	confess "ERROR! seq_sep not defined!" if !$seq_sep;
 	$count = 100000 if not defined $count;
@@ -1913,8 +1915,8 @@ sub rr2tbl{
 	confess ":(" if not $file_tbl;
 	confess ":(" if not ($rrtype eq "ca" or $rrtype eq "cb");
 	my %r1a1r2a2 = rr2r1a1r2a2($file_rr, $rrtype);
-	my %lowerbound = rr2contacts_hash($file_rr, 100000, "lowerbound");
-	my %upperbound = rr2contacts_hash($file_rr, 100000);
+	my %lowerbound = rr2contacts_hash($file_rr, 1, 100000, "lowerbound");
+	my %upperbound = rr2contacts_hash($file_rr, 1, 100000);
 	my %rows_and_weights = ();
 	foreach (keys %r1a1r2a2){
 		my @C = split /\s+/, $_;

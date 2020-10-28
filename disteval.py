@@ -2,7 +2,7 @@
 Authors: Badri Adhikari, Jamie Lea, Bikash Shrestha, Jie Hou, and Matthew Bernardini
 University of Missouri-St. Louis, 10-25-2020
 
-File: Reconstruct 3D models with CONFOLD using a predicted distance map and evaluate using TM-score
+File: Reconstruct 3D models with DISTFOLD using a predicted distance map and evaluate using TM-score
 Options for building models:
     a) a plain 2D numpy distance map
     b) trRosetta predicted distance map
@@ -18,6 +18,7 @@ import os
 from math import sqrt
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.metrics import precision_score
+from scipy.stats import pearsonr
 
 if sys.version_info < (3,0,0):
     print('Python 3 required!!!')
@@ -208,6 +209,7 @@ def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pr
     errors['mae'] = np.nan
     errors['mse'] = np.nan
     errors['rmse'] = np.nan
+    errors['pearsonr'] = np.nan
     pred_dict = {}
     true_dict = {}
     for p in range(len(Y)):
@@ -233,6 +235,7 @@ def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pr
         errors['mae'] = round(mean_absolute_error(true_list, pred_list), 4)
         errors['mse'] = round(mean_squared_error(true_list, pred_list), 4)
         errors['rmse'] = round(sqrt(errors['mse']), 4)
+        errors['pearsonr'] = round(pearsonr(true_list, pred_list)[0], 4)
         errors['count'] = len(pred_list)
     return errors
 
@@ -305,13 +308,12 @@ def rr2dmap(filerr):
     # Absent values are NaNs
     C = np.full((L, L), np.nan)
     D = None  
-    if mode != 2:
-        for l in lines:
-            if not l[0].isdigit(): continue
-            c = l.split()
-            C[int(c[0]) - 1, int(c[1]) - 1] = float(c[pindex])
-            #D[int(c[0]) - 1, int(c[1]) - 1] = 4.0 / (float(c[pindex]) + 0.01)
-    else:
+    for l in lines:
+        if not l[0].isdigit(): continue
+        c = l.split()
+        C[int(c[0]) - 1, int(c[1]) - 1] = float(c[pindex])
+        #D[int(c[0]) - 1, int(c[1]) - 1] = 4.0 / (float(c[pindex]) + 0.01)
+    if mode == 2:
         # Absent values are NaNs
         D = np.full((L, L), np.nan)
         for l in lines:
@@ -336,12 +338,6 @@ def rr2dmap(filerr):
                 if max_prob_index == position:
                     break
             D[i,j] = d
-        # To Do: The case of CASP14
-        for i in range(L):
-            for j in range(i, L):
-                for k in range(1, 13):
-                    if not np.isnan(C[i, j]): C[i, j] += 0
-                    if np.isnan(C[i, j]): C[i, j] = 0
         D = np.clip(D, 0.0, 100.0)
     return (D, C, seq)
 
@@ -354,6 +350,10 @@ def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
     num_true = 0
     for j in range(0, L):
         for k in range(j, L):
+            try: 
+                CTRUE[j, k]
+            except IndexError: 
+                continue
             if np.isnan(CTRUE[j, k]): continue
             if abs(j - k) < minsep: continue
             if CTRUE[j, k] > 1.0 or CTRUE[j, k] < 0.0: print("WARNING!! True contact at "+str(j)+" "+str(k)+" is "+str(CTRUE[j, k]))
@@ -370,6 +370,10 @@ def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
     p_dict = {}
     for j in range(0, L):
         for k in range(j, L):
+            try:
+                CTRUE[j, k]
+            except IndexError:
+                continue
             if np.isnan(CTRUE[j, k]): continue
             if np.isnan(CPRED[j, k]): continue
             if abs(j - k) < minsep: continue
@@ -378,6 +382,10 @@ def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
     nc_count = 0
     for j in range(0, L):
         for k in range(j, L):
+            try:
+                CTRUE[j, k]
+            except IndexError:
+                continue
             if np.isnan(CTRUE[j, k]): continue
             if abs(j - k) < minsep: continue
             if CTRUE[j, k] != 1: continue
@@ -509,7 +517,7 @@ os.system('mkdir -p ' + job_dir)
 file_rr = job_dir + '/x.rr'
 if inputrr is None:
     seq = seqfasta(file_fasta)
-    dmap2rr(C, seq, file_rr)
+    dmap2rr(D, seq, file_rr)
 else:
     os.system('cp ' + inputrr + ' ' + job_dir + '/x.rr')
 
@@ -540,7 +548,7 @@ if not os.path.exists(native):
     sys.exit()
 
 print('')
-print('Run TM-scores')
+print('Run TM-score..')
 
 os.chdir(job_dir + '/stage1/')
 tmscores = {}
@@ -548,8 +556,10 @@ for pdb in os.listdir('./'):
     if not pdb.endswith('pdb'): continue
     tmscores[pdb] = evaltm(native, pdb)
 
+print('')
+print("TM-score RMSD    GDT-TS MODEL")
 for pdb in sorted(tmscores.items(), key=lambda kv: kv[1][1]):
     p = pdb[0]
     (r,t,g) = tmscores[pdb[0]]
-    print(f'{t:0.3f} {r:0.2f} {g:0.3f} {p}')
+    print(f"{t:5.3f}    {r:6.3f}  {g:5.3f}  {p}")
 
