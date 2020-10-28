@@ -194,8 +194,15 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    ```
    python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -r ./test/1guuA.npz -o ./build-1guuA -b -m 2 -t 12
    ```
-
-
+   Expected output:
+   ```
+   TM-score RMSD    GDT-TS MODEL
+   0.107    37.610  0.155  extended.pdb
+   0.268     9.724  0.375  1guuA_14.pdb
+   ...
+   0.876     0.979  0.940  1guuA_model1.pdb
+   0.880     1.151  0.950  1guuA_16.pdb
+   ```
 
 ## Contact  
 Badri Adhikari  
