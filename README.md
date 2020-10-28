@@ -41,13 +41,21 @@ Download all the files in the test folder, for example:
    ```
    Expected output:
    ```
-   ...
+   Evaluating distances..
+   sep: 12 xL: Top-L/5 {'mae': 0.9403, 'mse': 1.5143, 'rmse': 1.2306, 'count': 10}
+   sep: 12 xL: Top-L   {'mae': 1.7522, 'mse': 5.6841, 'rmse': 2.3841, 'count': 50}
+   sep: 12 xL: Top-NC  {'mae': 1.9263, 'mse': 6.6872, 'rmse': 2.586, 'count': 603}
    sep: 24 xL: Top-L/5 {'mae': 1.8154, 'mse': 4.6469, 'rmse': 2.1557, 'count': 10}
-   sep: 24 xL: Top---L {'mae': 2.1541, 'mse': 8.1816, 'rmse': 2.8603, 'count': 50}
-   ...
-   sep: 24 xL: Top-L/5 0.5
-   sep: 24 xL: Top---L 0.38462
-   ...
+   sep: 24 xL: Top-L   {'mae': 2.1541, 'mse': 8.1816, 'rmse': 2.8603, 'count': 50}
+   sep: 24 xL: Top-NC  {'mae': 2.4536, 'mse': 9.6231, 'rmse': 3.1021, 'count': 295}
+
+   Evaluating contacts..
+   sep: 12 xL: Top-L/5 {'precision': 0.9, 'count': 10}
+   sep: 12 xL: Top-L   {'precision': 0.6, 'count': 30}
+   sep: 12 xL: Top-NC  {'precision': 0.6, 'count': 30}
+   sep: 24 xL: Top-L/5 {'precision': 0.5, 'count': 10}
+   sep: 24 xL: Top-L   {'precision': 0.38462, 'count': 13}
+   sep: 24 xL: Top-NC  {'precision': 0.38462, 'count': 13}
    ```
 1. Evaluate trRosetta prediction
 
