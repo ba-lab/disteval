@@ -143,5 +143,5 @@ sub rr2contacts_hash{
 wget https://raw.githubusercontent.com/multicom-toolbox/CONFOLD/master/test/input/1guu.rr
 wget https://raw.githubusercontent.com/multicom-toolbox/CONFOLD/master/test/input/1guu.ss
 # This will take one or two minutes
-perl ../confold.pl -rr ./1guu.rr  -ss ./1guu.ss -o ./output-1guu -mcount 20 -selectrr 1.0L
+perl ./confold.pl -rr ./1guu.rr  -ss ./1guu.ss -o ./output-1guu -mcount 20 -selectrr 1.0L
 ```
