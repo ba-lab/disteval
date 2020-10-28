@@ -20,11 +20,6 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
 
 ## Test
 
-Download all the files in the test folder, for example:
-   ```
-   wget https://raw.githubusercontent.com/ba-lab/disteval/main/test/1guuA.contact.rr
-   ```
-
 ### Example 0. See help
    ```
    python3 ../disteval-using-confold.py -h
