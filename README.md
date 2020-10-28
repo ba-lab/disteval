@@ -100,8 +100,8 @@ Download all the files in the test folder, for example:
 - [x] Download TM-score from https://zhanglab.ccmb.med.umich.edu/TM-score/TMscore.gz
     ```
     wget https://zhanglab.ccmb.med.umich.edu/TM-score/TMscore.gz
-    gunzip TM-score.gz
-    chmod +x TM-score
+    gunzip TMscore.gz
+    chmod +x TMscore
     ```
 - [x] CONFOLD
     - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
