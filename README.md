@@ -5,11 +5,11 @@
 - [x] Numpy
 
 ## Prerequisites (for building 3D models)
-1. Install csh
+- [x] Install csh
    ```
    sudo apt install csh
    ```
-1. Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
+- [x] Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
    ```
    chmod +x dssp-2.0.4-linux-amd64
    ```
