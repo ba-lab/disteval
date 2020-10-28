@@ -10,6 +10,9 @@ Protein inter-residue contact and distance prediction is a key intermediate step
 
 # Distance/contact evaluation using the `disteval.py`
 
+## Download
+Download from [https://github.com/ba-lab/disteval/releases](https://github.com/ba-lab/disteval/releases)
+
 ## Prerequisites
 - [x] Python3
 - [x] Numpy
