@@ -1,12 +1,13 @@
 '''
-Author: Badri Adhikari, University of Missouri-St. Louis, 10-25-2020
+Authors: Badri Adhikari, Jamie Lea, Bikash Shrestha, Jie Hou, and Matt Bernardini
+University of Missouri-St. Louis, 10-25-2020
+
 File: Reconstruct 3D models with CONFOLD using a predicted distance map and evaluate using TM-score
 Options for building models:
     a) a plain 2D numpy distance map
     b) trRosetta predicted distance map
     c) CASP RR file
     d) use distances from the PDB itself
-Additional contributors: Jamie Lea, Bikash Shrestha, and Matt Bernardini
 '''
 
 import argparse
