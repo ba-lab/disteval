@@ -6,6 +6,7 @@ Options for building models:
     b) trRosetta predicted distance map
     c) CASP RR file
     d) use distances from the PDB itself
+Additional contributors: Jamie Lea, Bikash Shrestha, and Matt Bernardini
 '''
 
 import argparse
@@ -26,12 +27,12 @@ def get_args():
     parser.add_argument('-n', type=str, required = False, dest = 'native',    help="true PDB file")
     parser.add_argument('-f', type=str, required = False, dest = 'fasta',     help="FASTA file of the input distance map (for building models)")
     parser.add_argument('-d', type=str, required = False, dest = 'dmap',      help="Predicted distance map as a 2D numpy array")
-    parser.add_argument('-t', type=int, required = True,  dest = 'threshold', help="Distance cutoff threshold")
+    parser.add_argument('-t', type=int, required = False, dest = 'threshold', default = 8, help="Distance cutoff threshold")
     parser.add_argument('-c', type=str, required = False, dest = 'inputrr',   help="CASP RR file as input (all input rows are used)") 
     parser.add_argument('-r', type=str, required = False, dest = 'trrosetta', help="trRosetta prediction")
-    parser.add_argument('-o', type=str, required = True,  dest = 'jobdir',    help="Output directory")
+    parser.add_argument('-o', type=str, required = False,  dest = 'jobdir',    help="Output directory")
     parser.add_argument('-s', type=str, required = False, dest = 'ss',        help="3-class (H/C/E) Secondary structure file in FASTA format (for building models)")
-    parser.add_argument('-m', type=int, required = True,  dest = 'minsep',    help="Minimum sequence separation (24 for long-range & 12 for medium+long-range)")
+    parser.add_argument('-m', type=int, required = False,  dest = 'minsep',   default = 2, help="Minimum sequence separation (24 for long-range & 12 for medium+long-range)")
     parser.add_argument('-p',           required = False, dest = 'truedmap',   action = 'store_true',  help='Use true distances from the PDB as input')
     parser.add_argument('-b',           required = False, dest = 'modeling3d', action = 'store_true', help='Build 3D models using CNS')
     args = parser.parse_args()
@@ -237,24 +238,24 @@ def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pr
 def calc_dist_errors_various_xl(P, Y, L, separation = [12, 24]):
     all_metrics = {}
     dist_thres = ['1000'] # ['08', '12']
-    topxl = {5:'l5', 1:'l1', 0.001:'nc'}
+    topxl = {5:'Top-L/5', 1:'Top-L  ', 0.001:'Top-NC '}
     for dt in dist_thres:
         for sep in separation:
             for xl in topxl.keys():
                 results = calc_dist_errors(P = P, Y = Y, L = L, dist_thres = int(dt), min_sep = int(sep), top_l_by_x = xl)
                 if len(dist_thres) > 1:
-                    all_metrics["dthres: " + dt + " sep: " + str(sep) + " xL: " + topxl[xl]] = results
+                    all_metrics["dthres: " + dt + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
                 else:
-                    all_metrics["sep: " + str(sep) + " xL: " + topxl[xl]] = results
+                    all_metrics["min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
     return all_metrics
 
 def calc_contact_errors_various_xl(CPRED, CTRUE, separation = [12, 24]):
     all_metrics = {}
-    topxl = {0.2:'l5', 1:'l1', 10:'nc'}
+    topxl = {0.2:'Top-L/5', 1:'Top-L  ', 10:'Top-NC '}
     for sep in separation:
         for xl in topxl.keys():
             results = calculate_contact_precision(CPRED = CPRED, CTRUE = CTRUE, minsep = sep, topxl = xl)
-            all_metrics["sep: " + str(sep) + " xL: " + topxl[xl]] = results
+            all_metrics["min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
     return all_metrics
 
 def rr2dmap(filerr):
@@ -300,8 +301,6 @@ def rr2dmap(filerr):
         seq = f.readline().strip()
         f.close()
     L = len(seq)
-    print(L)
-    print(seq)
     # Absent values are NaNs
     C = np.full((L, L), np.nan)
     D = None  
@@ -343,9 +342,11 @@ def rr2dmap(filerr):
                     if not np.isnan(C[i, j]): C[i, j] += 0
                     if np.isnan(C[i, j]): C[i, j] = 0
         D = np.clip(D, 0.0, 100.0)
-    return (D, C)
+    return (D, C, seq)
 
 def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
+    errors = {}
+    errors['precision'] = np.nan
     L = len(CPRED)
     if LPDB is None: LPDB = len(np.where(~np.isnan(np.diagonal(CTRUE)))[0])
     # The number of valid true values must be <= predicted
@@ -363,8 +364,7 @@ def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
             if abs(j - k) < minsep: continue
             if CPRED[j, k] > 1.0 or CPRED[j, k] < 0.0: print("WARNING!! Predicted probability at "+str(j)+" "+str(k)+" is "+str(CPRED[j, k]))
             num_pred += 1
-    if num_true < 1:
-        return float('nan')
+    if num_true < 1: return float('nan')
     # Put predictions in a dictionary so they can be sorted
     p_dict = {}
     for j in range(0, L):
@@ -381,8 +381,7 @@ def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
             if abs(j - k) < minsep: continue
             if CTRUE[j, k] != 1: continue
             nc_count += 1
-    if nc_count < 1:
-        return float('nan')
+    if nc_count < 1: return float('nan')
     # Obtain top xL predictions
     xl = int(LPDB * topxl)
     if xl > nc_count: xl = nc_count
@@ -395,7 +394,9 @@ def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
         xl -= 1
         if xl == 0: break
         ####### PUT NEW CONTACT METRICS HERE ######
-    return round(precision_score(true_list, pred_list), 5)
+    errors['precision'] = round(precision_score(true_list, pred_list), 5)
+    errors['count'] = len(true_list)
+    return errors
 
 def dmap2rr(P, seq, file_rr):
     f = open(file_rr, 'w')
@@ -434,7 +435,8 @@ if native:
     print('')
     print('Load PDB..')
     (l_for_xL, ND, rnum_rnames) = pdb2dmap(native)
-    print(ND.shape, l_for_xL)
+    print('True dmap: ', ND.shape)
+    print('Total valid residues:', l_for_xL)
     NC = np.copy(ND)
     NC [NC < 8.0] = 1
     NC [NC >= 8.0] = 0
@@ -442,6 +444,7 @@ if native:
 # Prepare the predicted distances and contacts
 D = None
 C = None 
+print('')
 if trrosetta is not None:
     print('Load the input trRosetta prediction..')
     (D, C) = trrosetta2maps(trrosetta)
@@ -456,10 +459,14 @@ elif truedmap:
     print('Obtaining a true distance map from the input PDB..')
     D = np.copy(ND)
     C = 4.0 / (D + 0.001)
-else:
-    (D, C) = rr2dmap(inputrr)
+elif inputrr:
+    print('Obtaining a contact map from the input RR..')
+    (D, C, seq) = rr2dmap(inputrr)
+    print(seq)
     if np.isnan(C).all(): sys.exit('ERROR! C is all NaNs!')
     if D is not None and np.isnan(D).all(): sys.exit('ERROR! D is all NaNs!')
+else:
+    sys.exit('ERROR!! No input provided!!')
 
 # Check for NaNs
 print('')
@@ -478,17 +485,25 @@ if D is not None:
     print('Evaluating distances..')
     all_metrics = calc_dist_errors_various_xl(P = D, Y = ND, L = l_for_xL) #, separation = [minsep])
     for k in all_metrics:
-        print(os.path.basename(native), k, all_metrics[k])
+        print(k, all_metrics[k])
 
+# Evaluate contacts
 if C is not None:
     print('')
     print('Evaluating contacts..')
     all_metrics = calc_contact_errors_various_xl(CPRED = C, CTRUE = NC) #, separation = [minsep])
     for k in all_metrics:
-        print(os.path.basename(native), k, all_metrics[k])
+        print(k, all_metrics[k])
 
 if not modeling3d:
     sys.exit()
+
+if file_fasta is None:
+    sys.exit('ERROR!! Fasta file is needed for building 3D models')
+if job_dir is None:
+    sys.exit('ERROR!! job_dir is needed for building 3D models')
+
+os.system('mkdir -p ' + job_dir)
 
 file_rr = job_dir + '/x.rr'
 if inputrr is None:
@@ -504,7 +519,8 @@ restraint_count = 0
 for l in lines:
     if l[0].isdigit(): restraint_count += 1
 
-print('Restraints:')
+print('')
+print('Restraints (head):')
 os.system('head ' + file_rr)
 
 if restraint_count < 1:
@@ -515,7 +531,9 @@ print('')
 print('Run CONFOLD')
 ssparam = ''
 if ss is not None: ssparam = ' -ss ' + ss
-os.system(f"perl {CONFOLD} -seq {file_fasta} -rr {file_rr} -o {job_dir} -mcount 20 -selectrr all" + ssparam)
+status = os.system(f"perl {CONFOLD} -seq {file_fasta} -rr {file_rr} -o {job_dir} -mcount 20 -selectrr all" + ssparam)
+if status != 0:
+    sys.exit('ERROR!! Could not executed CONFOLD!')
 
 if not os.path.exists(native):
     sys.exit()
