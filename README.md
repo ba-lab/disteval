@@ -86,7 +86,7 @@ Download all the files in the test folder, for example:
    sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
    ```
 
-# Evaluation through distance/contact-guided 3D modeling using `disteval.py`
+# Evaluation through 3D modeling using `disteval.py`
 
 ## Prerequisites
 - [x] Install csh
