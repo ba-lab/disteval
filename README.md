@@ -22,66 +22,65 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
 
 ### Example 0. See help
    ```
-   python3 ../disteval-using-confold.py -h
+   python3 ./disteval.py -h
    ```
 
 ### Example 1. Evaluate a predicted RR contacts file
    ```
-   python3 ../disteval-using-confold.py -n 1guuA.pdb -c 1guuA.contact.rr
+   python3 ./disteval.py -n ./test/1guuA.pdb -c ./test/1guuA.contact.rr
    ```
    Expected output:
    ```
    Evaluating contacts..
-   sep: 12 xL: Top-L/5 {'precision': 1.0, 'count': 9}
-   sep: 12 xL: Top-L   {'precision': 1.0, 'count': 9}
-   sep: 12 xL: Top-NC  {'precision': 1.0, 'count': 9}
-   sep: 24 xL: Top-L/5 {'precision': 1.0, 'count': 1}
-   sep: 24 xL: Top-L   {'precision': 1.0, 'count': 1}
-   sep: 24 xL: Top-NC  {'precision': 1.0, 'count': 1}
+   min-seq-sep: 12 xL: Top-L/5 {'precision': 1.0, 'count': 9}
+   min-seq-sep: 12 xL: Top-L   {'precision': 1.0, 'count': 9}
+   min-seq-sep: 12 xL: Top-NC  {'precision': 1.0, 'count': 9}
+   min-seq-sep: 24 xL: Top-L/5 {'precision': 1.0, 'count': 1}
+   min-seq-sep: 24 xL: Top-L   {'precision': 1.0, 'count': 1}
+   min-seq-sep: 24 xL: Top-NC  {'precision': 1.0, 'count': 1}
    ```
 ### Example 2. Evaluate a predicted distance map
    ```
-   python3 ../disteval-using-confold.py -n 1guuA.pdb -d 1guuA.predicted.npy
+   python3 ./disteval.py -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy
    ```
    Expected output:
    ```
    Evaluating distances..
-   sep: 12 xL: Top-L/5 {'mae': 0.9403, 'mse': 1.5143, 'rmse': 1.2306, 'count': 10}
-   sep: 12 xL: Top-L   {'mae': 1.7522, 'mse': 5.6841, 'rmse': 2.3841, 'count': 50}
-   sep: 12 xL: Top-NC  {'mae': 1.9263, 'mse': 6.6872, 'rmse': 2.586, 'count': 603}
-   sep: 24 xL: Top-L/5 {'mae': 1.8154, 'mse': 4.6469, 'rmse': 2.1557, 'count': 10}
-   sep: 24 xL: Top-L   {'mae': 2.1541, 'mse': 8.1816, 'rmse': 2.8603, 'count': 50}
-   sep: 24 xL: Top-NC  {'mae': 2.4536, 'mse': 9.6231, 'rmse': 3.1021, 'count': 295}
-
+   min-seq-sep: 12 xL: Top-L/5 {'mae': 0.9403, 'mse': 1.5143, 'rmse': 1.2306, 'count': 10}
+   min-seq-sep: 12 xL: Top-L   {'mae': 1.7522, 'mse': 5.6841, 'rmse': 2.3841, 'count': 50}
+   min-seq-sep: 12 xL: Top-NC  {'mae': 1.9263, 'mse': 6.6872, 'rmse': 2.586, 'count': 603}
+   min-seq-sep: 24 xL: Top-L/5 {'mae': 1.8154, 'mse': 4.6469, 'rmse': 2.1557, 'count': 10}
+   min-seq-sep: 24 xL: Top-L   {'mae': 2.1541, 'mse': 8.1816, 'rmse': 2.8603, 'count': 50}
+   min-seq-sep: 24 xL: Top-NC  {'mae': 2.4536, 'mse': 9.6231, 'rmse': 3.1021, 'count': 295}
    Evaluating contacts..
-   sep: 12 xL: Top-L/5 {'precision': 0.9, 'count': 10}
-   sep: 12 xL: Top-L   {'precision': 0.6, 'count': 30}
-   sep: 12 xL: Top-NC  {'precision': 0.6, 'count': 30}
-   sep: 24 xL: Top-L/5 {'precision': 0.5, 'count': 10}
-   sep: 24 xL: Top-L   {'precision': 0.38462, 'count': 13}
-   sep: 24 xL: Top-NC  {'precision': 0.38462, 'count': 13}
+   min-seq-sep: 12 xL: Top-L/5 {'precision': 0.9, 'count': 10}
+   min-seq-sep: 12 xL: Top-L   {'precision': 0.6, 'count': 30}
+   min-seq-sep: 12 xL: Top-NC  {'precision': 0.6, 'count': 30}
+   min-seq-sep: 24 xL: Top-L/5 {'precision': 0.5, 'count': 10}
+   min-seq-sep: 24 xL: Top-L   {'precision': 0.38462, 'count': 13}
+   min-seq-sep: 24 xL: Top-NC  {'precision': 0.38462, 'count': 13}
    ```
 ### Example 3. Evaluate trRosetta prediction
    ```
-   python3 ../disteval-using-confold.py -n 1guuA.pdb -r 1guuA.npz 
+   python3 ./disteval.py -n ./test/1guuA.pdb -r ./test/1guuA.npz 
    ```
    Expected output:
    ```
    Evaluating distances..
-   sep: 12 xL: Top-L/5 {'mae': 0.5485, 'mse': 0.5375, 'rmse': 0.7331, 'count': 10}
-   sep: 12 xL: Top-L   {'mae': 0.6789, 'mse': 0.7678, 'rmse': 0.8762, 'count': 50}
-   sep: 12 xL: Top-NC  {'mae': 1.2951, 'mse': 3.8733, 'rmse': 1.9681, 'count': 741}
-   sep: 24 xL: Top-L/5 {'mae': 0.537, 'mse': 0.4237, 'rmse': 0.6509, 'count': 10}
-   sep: 24 xL: Top-L   {'mae': 0.6691, 'mse': 0.6725, 'rmse': 0.8201, 'count': 50}
-   sep: 24 xL: Top-NC  {'mae': 1.2281, 'mse': 3.2863, 'rmse': 1.8128, 'count': 351}
+   min-seq-sep: 12 xL: Top-L/5 {'mae': 0.5485, 'mse': 0.5375, 'rmse': 0.7331, 'count': 10}
+   min-seq-sep: 12 xL: Top-L   {'mae': 0.6789, 'mse': 0.7678, 'rmse': 0.8762, 'count': 50}
+   min-seq-sep: 12 xL: Top-NC  {'mae': 1.2951, 'mse': 3.8733, 'rmse': 1.9681, 'count': 741}
+   min-seq-sep: 24 xL: Top-L/5 {'mae': 0.537, 'mse': 0.4237, 'rmse': 0.6509, 'count': 10}
+   min-seq-sep: 24 xL: Top-L   {'mae': 0.6691, 'mse': 0.6725, 'rmse': 0.8201, 'count': 50}
+   min-seq-sep: 24 xL: Top-NC  {'mae': 1.2281, 'mse': 3.2863, 'rmse': 1.8128, 'count': 351}
 
    Evaluating contacts..
-   sep: 12 xL: Top-L/5 {'precision': 1.0, 'count': 10}
-   sep: 12 xL: Top-L   {'precision': 0.8, 'count': 30}
-   sep: 12 xL: Top-NC  {'precision': 0.8, 'count': 30}
-   sep: 24 xL: Top-L/5 {'precision': 1.0, 'count': 10}
-   sep: 24 xL: Top-L   {'precision': 0.84615, 'count': 13}
-   sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
+   min-seq-sep: 12 xL: Top-L/5 {'precision': 1.0, 'count': 10}
+   min-seq-sep: 12 xL: Top-L   {'precision': 0.8, 'count': 30}
+   min-seq-sep: 12 xL: Top-NC  {'precision': 0.8, 'count': 30}
+   min-seq-sep: 24 xL: Top-L/5 {'precision': 1.0, 'count': 10}
+   min-seq-sep: 24 xL: Top-L   {'precision': 0.84615, 'count': 13}
+   min-seq-sep: 24 xL: Top-NC  {'precision': 0.84615, 'count': 13}
    ```
 
 # Evaluation through 3D modeling using `disteval.py`
