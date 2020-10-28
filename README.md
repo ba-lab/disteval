@@ -146,20 +146,20 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    ```
 
 ### Example 2. Predicted distance with high sequence separation & Secondary structure
-      ```
-      python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 6 -t 12
-      ```
+   ```
+   python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 6 -t 12
+   ```
 
-      Expected output:
-      ```
-      TM-score RMSD    GDT-TS MODEL
-      0.107    37.610  0.155  extended.pdb
-      0.630     3.016  0.745  1guuA_11.pdb
-      ...
-      0.681     2.528  0.785  1guuA_6.pdb
-      0.681     2.489  0.790  1guuA_9.pdb
+   Expected output:
+   ```
+   TM-score RMSD    GDT-TS MODEL
+   0.107    37.610  0.155  extended.pdb
+   0.630     3.016  0.745  1guuA_11.pdb
+   ...
+   0.681     2.528  0.785  1guuA_6.pdb
+   0.681     2.489  0.790  1guuA_9.pdb
 
-      ```
+   ```
 
 ### Example 3. Predicted distance including local distances
 ```
