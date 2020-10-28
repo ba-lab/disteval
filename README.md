@@ -191,6 +191,10 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    ```
 
 ### Example 5. Distances predicted by trRosetta method
+   ```
+   python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -r ./test/1guuA.npz -o ./build-1guuA -b -m 2 -t 12
+   ```
+
 
 
 ## Contact  
