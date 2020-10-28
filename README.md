@@ -4,7 +4,7 @@
 1. Python3
 1. Numpy
 
-## Prerequisites (building 3D models)
+## Prerequisites (for building 3D models)
 1. csh
    ```
    sudo apt install csh
