@@ -21,9 +21,21 @@
 1. CONFOLD
     - Follow instructions [here](CONFOLD-CHANGES.md) to download, install, and modify CONFOLD
 
-## Test cases
-To Do: include the best TM-score for each case:
-1. predicted contacts only
+## Test cases (without model building)
+1. Evaluate a predicted RR contacts file
+   ```
+   wget 
+   wget 
+   python3 disteval.py 
+   ```
+   Expected output:
+   ```
+   
+   ```
+1. Evaluate a predicted distance map
+1. Evaluate trRosetta prediction
+
+## Test cases (with model building)
 1. predicted contacts + SS
 1. predicted distances with high seq sep + SS
 1. native dmap
@@ -31,7 +43,6 @@ To Do: include the best TM-score for each case:
 1. predicted 2D numpy
 1. trRosetta
 1. CASP distances RR
-
 
 
 ## Contact  
