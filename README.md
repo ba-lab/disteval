@@ -130,19 +130,46 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
 ## Test
 
 ### Example 1. Predicted contacts & Secondary structure
+   ```
+   python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -c ./test/1guuA.contact.rr -s ./test/1guuA.ss -o ./build-1guuA  -b
+   ```
+
+   Expected output:
+   ```
+   TM-score RMSD    GDT-TS MODEL
+   0.297    10.100  0.385  1guuA_11.pdb
+   0.320     7.729  0.460  1guuA_8.pdb
+   ...
+   0.465     3.935  0.630  1guuA_model1.pdb
+   0.483     5.776  0.600  1guuA_model2.pdb
+   0.550     4.534  0.665  1guuA_5.pdb
+   ```
+
+### Example 2. Predicted distance with high sequence separation & Secondary structure
+      ```
+      python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 6 -t 12
+      ```
+
+      Expected output:
+      ```
+      TM-score RMSD    GDT-TS MODEL
+      0.107    37.610  0.155  extended.pdb
+      0.630     3.016  0.745  1guuA_11.pdb
+      ...
+      0.681     2.528  0.785  1guuA_6.pdb
+      0.681     2.489  0.790  1guuA_9.pdb
+
+      ```
+
+### Example 3. Predicted distance including local distances
 ```
-python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -c ./test/1guuA.contact.rr -s ./test/1guuA.ss -o ./build-1guuA  -b
+python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 2 -t 12
 ```
 
 Expected output:
 ```
-TM-score RMSD    GDT-TS MODEL
-0.297    10.100  0.385  1guuA_11.pdb
-0.320     7.729  0.460  1guuA_8.pdb
-...
-0.465     3.935  0.630  1guuA_model1.pdb
-0.483     5.776  0.600  1guuA_model2.pdb
-0.550     4.534  0.665  1guuA_5.pdb
+
+
 ```
 
 1. predicted distances with high seq sep + SS
