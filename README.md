@@ -129,7 +129,7 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
 
 ## Test
 
-### Example 1. Predicted contacts & Secondary structure
+### Example 1. Predicted contacts (RR file) & Secondary structure
    ```
    python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -c ./test/1guuA.contact.rr -s ./test/1guuA.ss -o ./build-1guuA  -b
    ```
@@ -145,7 +145,7 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    0.550     4.534  0.665  1guuA_5.pdb
    ```
 
-### Example 2. Predicted distance with high sequence separation & Secondary structure
+### Example 2. Predicted distance map (up to 12Å) without local distances & Secondary structure
    ```
    python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 6 -t 12
    ```
@@ -161,7 +161,7 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
 
    ```
 
-### Example 3. Predicted distance including local distances
+### Example 3. Predicted distance map (up to 12Å) including local distances
    ```
    python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -d ./test/1guuA.predicted.npy -s ./test/1guuA.ss -o ./build-1guuA -b -m 2 -t 12
    ```
@@ -175,13 +175,22 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    0.681     3.349  0.775  1guuA_13.pdb
    0.684     2.330  0.795  1guuA_3.pdb
    ```
+   
+### Example 4. Reconstruction using a native (true) distance map
+   ```
+   python3 disteval.py -f ./test/1guuA.fasta -n ./test/1guuA.pdb -o ./build-1guuA -p -b -m 2 -t 18
+   ```
 
-1. predicted distances with high seq sep + SS
-1. native dmap
-1. very high accuracy native dmap reconstruction
-1. predicted 2D numpy
-1. trRosetta
-1. CASP distances RR
+   Expected output:
+   ```
+   TM-score RMSD    GDT-TS MODEL
+   0.107    37.610  0.155  extended.pdb
+   ...
+   0.987     0.265  1.000  1guuA_model2.pdb
+   0.991     0.214  1.000  1guuA_16.pdb
+   ```
+
+### Example 5. Distances predicted by trRosetta method
 
 
 ## Contact  
