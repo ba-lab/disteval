@@ -2,7 +2,7 @@
 
 ## Prerequisites (for distance and contact evaluation)
 - [x] Python3
-1. Numpy
+- [x] Numpy
 
 ## Prerequisites (for building 3D models)
 1. Install csh
