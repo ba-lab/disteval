@@ -75,7 +75,7 @@ system_cmd("./job.sh", "job.log");
 #system_cmd("cp $dir_out/stage1/$id.ss     ./");
 ```
 
-### 4. Add the following subroutine to `confold.pl`
+### 4. Replace the existing `rr2tbl` subroutine in `confold.pl` with following:
 ```perl
 sub rr2tbl{
 	my $file_rr  = shift;
@@ -110,7 +110,7 @@ sub rr2tbl{
 }
 ```
 
-### 4. Add the following subroutine to `confold.pl`
+### 4. Replace the existing `rr2contacts_hash` subroutine in `confold.pl` with following:
 ```perl
 sub rr2contacts_hash{
 	my $file_rr = shift;
