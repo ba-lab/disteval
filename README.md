@@ -9,6 +9,7 @@ Protein inter-residue contact and distance prediction is a key intermediate step
 </p>
 
 # Prerequisites
+For the downloadable version.
 ## Prerequisites for distance and contact evaluation
 - [x] Python3
 - [x] Numpy
