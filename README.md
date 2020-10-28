@@ -1,8 +1,8 @@
 # DISTEVAL
 
 ## Prerequisites (for distance and contact evaluation)
-1. `python3`
-1. `pip3 install numpy`
+1. Python3
+1. Numpy
 
 ## Prerequisites (building 3D models)
 1. csh
@@ -10,8 +10,10 @@
    sudo apt install csh
    ```
 1. DSSP 2.0.4
-   - Download `dssp-2.0.4-linux-amd64` from https://osf.io/qydjv/
-   - `chmod +x dssp-2.0.4-linux-amd64`
+   - Download 'dssp-2.0.4-linux-amd64' from https://osf.io/qydjv/
+   ```
+   chmod +x dssp-2.0.4-linux-amd64
+   ```
 1. TM-score 
     - Download from https://zhanglab.ccmb.med.umich.edu/TM-score/
     ```
