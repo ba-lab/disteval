@@ -59,13 +59,26 @@ threshold  = args.threshold
 job_dir    = args.jobdir
 minsep     = args.minsep
 
-if args.native is not None: native = os.path.abspath(args.native)
+basename   = ""
+native_basename = ""
+
+if args.native is not None: 
+    native = os.path.abspath(args.native)
+    native_basename = os.path.basename(native)
 if args.fasta is not None: file_fasta = os.path.abspath(args.fasta)
-if args.dmap is not None: dmap = os.path.abspath(args.dmap)
-if args.trrosetta is not None: trrosetta  = os.path.abspath(args.trrosetta)
-if args.inputrr is not None: inputrr = os.path.abspath(args.inputrr)
+if args.dmap is not None:
+    dmap = os.path.abspath(args.dmap)
+    basename = os.path.basename(dmap)
+if args.trrosetta is not None: 
+    trrosetta  = os.path.abspath(args.trrosetta)
+    basename = os.path.basename(trrosetta)
+if args.inputrr is not None: 
+    inputrr = os.path.abspath(args.inputrr)
+    basename = os.path.basename(inputrr) 
 if args.ss is not None: ss = os.path.abspath(args.ss)
-if args.truedmap is True: truedmap = True
+if args.truedmap is True: 
+    truedmap = True
+    basename = os.path.basename(native) 
 if args.modeling3d is True: modeling3d = True
 
 valid_amino_acids = {
@@ -494,7 +507,7 @@ if D is not None:
     print('Evaluating distances..')
     all_metrics = calc_dist_errors_various_xl(P = D, Y = ND, L = l_for_xL) #, separation = [minsep])
     for k in all_metrics:
-        print(k, all_metrics[k])
+        print(basename, native_basename, k, all_metrics[k])
 
 # Evaluate contacts
 if C is not None:
@@ -502,7 +515,7 @@ if C is not None:
     print('Evaluating contacts..')
     all_metrics = calc_contact_errors_various_xl(CPRED = C, CTRUE = NC) #, separation = [minsep])
     for k in all_metrics:
-        print(k, all_metrics[k])
+        print(basename, native_basename, k, all_metrics[k])
 
 if not modeling3d:
     sys.exit()
