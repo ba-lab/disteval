@@ -205,7 +205,7 @@ def trrosetta2maps(trrosetta):
                 C[i, j] += a[i, j, k]
     return (D, C)
 
-def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pred_limit = 20):
+def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pred_limit = 100):
     if Y is None:
         print('ERROR! Y is None!')
         return
@@ -235,7 +235,7 @@ def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pr
             if np.isnan(Y[p, q]): continue
             pred_dict[(p, q)] = P[p, q]
             true_dict[(p, q)] = Y[p, q]
-    xl = int (L / top_l_by_x)
+    xl = round (L / top_l_by_x)
     pred_list = []
     true_list = []
     for pair in sorted(pred_dict.items(), key=lambda x: x[1]):
@@ -255,7 +255,7 @@ def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pr
 def calc_dist_errors_various_xl(P, Y, L, separation = [12, 24]):
     all_metrics = {}
     dist_thres = ['1000'] # ['08', '12']
-    topxl = {5:'Top-L/5', 1:'Top-L  ', 0.001:'Top-NC '}
+    topxl = {5:'Top-L/5', 2:'Top-L/2', 1:'Top-L  ', 0.001:'Top-NC '}
     for dt in dist_thres:
         for sep in separation:
             for xl in topxl.keys():
@@ -268,7 +268,7 @@ def calc_dist_errors_various_xl(P, Y, L, separation = [12, 24]):
 
 def calc_contact_errors_various_xl(CPRED, CTRUE, separation = [12, 24]):
     all_metrics = {}
-    topxl = {0.2:'Top-L/5', 1:'Top-L  ', 10:'Top-NC '}
+    topxl = {'L/5':'Top-L/5', 'L/2':'Top-L/2', 'L':'Top-L  ', 'NC':'Top-NC '}
     for sep in separation:
         for xl in topxl.keys():
             results = calculate_contact_precision(CPRED = CPRED, CTRUE = CTRUE, minsep = sep, topxl = xl)
@@ -405,8 +405,12 @@ def calculate_contact_precision(CPRED, CTRUE, minsep, topxl, LPDB = None):
             nc_count += 1
     if nc_count < 1: return float('nan')
     # Obtain top xL predictions
-    xl = int(LPDB * topxl)
-    if xl > nc_count: xl = nc_count
+    xl = nc_count
+    if topxl == 'L/5': xl = round(0.2 * LPDB) # round() NOT int()
+    if topxl == 'L/2': xl = round(0.5 * LPDB) # round() NOT int()
+    if topxl == 'L'  : xl = LPDB
+    # This should actually be implemented, but sadly CASP does not do it
+    #if xl > nc_count: xl = nc_count
     pred_list = []
     true_list = []
     for pair in reversed(sorted(p_dict.items(), key=lambda x: x[1])):
