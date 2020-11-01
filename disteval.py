@@ -205,7 +205,10 @@ def trrosetta2maps(trrosetta):
                 C[i, j] += a[i, j, k]
     return (D, C)
 
-def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pred_limit = 100):
+def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pred_limit = 20):
+    # The pred_limit needs to be 20 and not a very high value so a comparison with trRosetta is fair.
+    #   The maximum predicted distance for a trRosetta is 20.5 but if other methods predict a higher distance
+    #   they will be severely penalized, hence this cutoff.
     if Y is None:
         print('ERROR! Y is None!')
         return
