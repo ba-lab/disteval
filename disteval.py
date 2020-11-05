@@ -601,17 +601,17 @@ def get_LDDT(true_map, pred_map, R=15, sep_thresh=-1, T_set=[0.5, 1, 2, 4], prec
     
     L_indices = S_thresh_indices & R_thresh_indices
     
-    true_flat_in_R = true_flat_map[R_thresh_indices]
-    pred_flat_in_R = pred_flat_map[R_thresh_indices]
+    true_flat_in_L = true_flat_map[L_indices]
+    pred_flat_in_L = pred_flat_map[L_indices]
     
     # Number of pairs in L
-    R_n = R_thresh_indices.sum()
+    L_n = L_indices.sum()
     
     # Calculated lDDT
     preserved_fractions = []
     for _thresh in T_set:
-        _n_preserved = get_n_preserved(true_flat_in_R, pred_flat_in_R, _thresh)
-        _f_preserved = _n_preserved / R_n
+        _n_preserved = get_n_preserved(true_flat_in_L, pred_flat_in_L, _thresh)
+        _f_preserved = _n_preserved / L_n
         preserved_fractions.append(_f_preserved)
         
     lDDT = np.mean(preserved_fractions)
