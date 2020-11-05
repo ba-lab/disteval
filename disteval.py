@@ -524,6 +524,112 @@ if C is not None:
     for k in all_metrics:
         print(basename, native_basename, k, all_metrics[k])
 
+
+## ######### ADDED BY JAMIE - LDDT
+
+# Helpers for metrics calculated using numpy scheme
+def get_flattened(dmap):
+  if dmap.ndim == 1:
+    return dmap
+  elif dmap.ndim == 2:
+    return dmap[np.triu_indices_from(dmap, k=1)]
+  else:
+    assert False, "ERROR: the passes array has dimension not equal to 2 or 1!"
+
+def get_separations(dmap):
+  t_indices = np.triu_indices_from(dmap, k=1)
+  separations = np.abs(t_indices[0] - t_indices[1])
+  return separations
+  
+# return a 1D boolean array indicating where the sequence separation in the
+# upper triangle meets the threshold comparison
+def get_sep_thresh_b_indices(dmap, thresh, comparator):
+  assert comparator in {'gt', 'lt', 'ge', 'le'}, "ERROR: Unknown comparator for thresholding!"
+  dmap_flat = get_flattened(dmap)
+  separations = get_separations(dmap)
+  if comparator == 'gt':
+    threshed = separations > thresh
+  elif comparator == 'lt':
+    threshed = separations < thresh
+  elif comparator == 'ge':
+    threshed = separations >= thresh
+  elif comparator == 'le':
+    threshed = separations <= thresh
+
+  return threshed
+
+# return a 1D boolean array indicating where the distance in the
+# upper triangle meets the threshold comparison
+def get_dist_thresh_b_indices(dmap, thresh, comparator):
+  assert comparator in {'gt', 'lt', 'ge', 'le'}, "ERROR: Unknown comparator for thresholding!"
+  dmap_flat = get_flattened(dmap)
+  if comparator == 'gt':
+    threshed = dmap_flat > thresh
+  elif comparator == 'lt':
+    threshed = dmap_flat < thresh
+  elif comparator == 'ge':
+    threshed = dmap_flat >= thresh
+  elif comparator == 'le':
+    threshed = dmap_flat <= thresh
+  return threshed
+
+
+# Calculate lDDT using numpy scheme
+def get_LDDT(true_map, pred_map, R=15, sep_thresh=-1, T_set=[0.5, 1, 2, 4], precision=4):
+    '''
+    Mariani V, Biasini M, Barbato A, Schwede T.
+    lDDT: a local superposition-free score for comparing protein structures and models using distance difference tests.
+    Bioinformatics. 2013 Nov 1;29(21):2722-8.
+    doi: 10.1093/bioinformatics/btt473.
+    Epub 2013 Aug 27.
+    PMID: 23986568; PMCID: PMC3799472.
+    '''
+    
+    # Helper for number preserved in a threshold
+    def get_n_preserved(ref_flat, mod_flat, thresh):
+        err = np.abs(ref_flat - mod_flat)
+        n_preserved = (err < thresh).sum()
+        return n_preserved
+    
+    # flatten upper triangles
+    true_flat_map = get_flattened(true_map)
+    pred_flat_map = get_flattened(pred_map)
+    
+    # Find set L
+    S_thresh_indices = get_sep_thresh_b_indices(true_map, sep_thresh, 'gt')
+    R_thresh_indices = get_dist_thresh_b_indices(true_flat_map, R, 'lt')
+    
+    L_indices = S_thresh_indices & R_thresh_indices
+    
+    true_flat_in_R = true_flat_map[R_thresh_indices]
+    pred_flat_in_R = pred_flat_map[R_thresh_indices]
+    
+    # Number of pairs in L
+    R_n = R_thresh_indices.sum()
+    
+    # Calculated lDDT
+    preserved_fractions = []
+    for _thresh in T_set:
+        _n_preserved = get_n_preserved(true_flat_in_R, pred_flat_in_R, _thresh)
+        _f_preserved = _n_preserved / R_n
+        preserved_fractions.append(_f_preserved)
+        
+    lDDT = np.mean(preserved_fractions)
+    if precision > 0:
+        lDDT = round(lDDT, precision)
+    return lDDT
+
+
+# ### Find and print lDDT if ND and D provided:
+
+if (ND is not None) and (D is not None):
+    LDDT = get_LDDT(ND, D)
+    print('')
+    print("Cb-distance map LDDT score: ", LDDT)
+
+
+## ######### DONE WITH ADDITION BY JAMIE - LDDT
+
 if not modeling3d:
     sys.exit()
 
