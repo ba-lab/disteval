@@ -620,13 +620,16 @@ def get_LDDT(true_map, pred_map, R=15, sep_thresh=-1, T_set=[0.5, 1, 2, 4], prec
     return lDDT
 
 
-# ### Find and print lDDT if ND and D provided:
-
+# ### Find and print lDDT scores if ND and D provided:
 if (ND is not None) and (D is not None):
-    LDDT = get_LDDT(ND, D)
+    LDDT_dict = {}
+    for S in [0, 6, 12, 24]:
+        for R in [15]:
+            LDDT_dict[f"Radius: {R:2d} min-seq-sep: {S:2d}"] = get_LDDT(ND, D, R, S)
     print('')
-    print("Cb-distance map LDDT score: ", LDDT)
-
+    print("Cb-distance map LDDT scores")
+    for LDDT_k, LDDT_v in LDDT_dict.items():
+        print(basename, native_basename, LDDT_k, "  Cb-LDDT =", LDDT_v)
 
 ## ######### DONE WITH ADDITION BY JAMIE - LDDT
 
