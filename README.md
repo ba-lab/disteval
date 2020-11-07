@@ -8,7 +8,7 @@ Protein inter-residue contact and distance prediction is a key intermediate step
 
 **Webserver:** [http://deep.cs.umsl.edu/disteval/](http://deep.cs.umsl.edu/disteval/)
 
-# Distance/contact evaluation using the `disteval.py`
+# Distance/contact evaluation using `disteval.py`
 
 ## Download
 Download from [https://github.com/ba-lab/disteval/releases](https://github.com/ba-lab/disteval/releases)
