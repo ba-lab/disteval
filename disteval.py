@@ -266,9 +266,9 @@ def calc_dist_errors_various_xl(P, Y, L, separation = [12, 24]):
                 for xl in topxl.keys():
                     results = calc_dist_errors(P = P, Y = Y, L = L, dist_thres = int(dt), min_sep = int(sep), top_l_by_x = xl, pred_limit = pt)
                     if len(dist_thres) > 1:
-                        all_metrics["prediction-cut-off: " + pt + " native-thres: " + dt + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
+                        all_metrics["prediction-cut-off: " + str(pt) + " native-thres: " + dt + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
                     else:
-                        all_metrics["prediction-cut-off: " + pt + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
+                        all_metrics["prediction-cut-off: " + str(pt) + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
     return all_metrics
 
 def calc_contact_errors_various_xl(CPRED, CTRUE, separation = [12, 24]):
