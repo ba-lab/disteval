@@ -205,7 +205,7 @@ def trrosetta2maps(trrosetta):
                 C[i, j] += a[i, j, k]
     return (D, C)
 
-def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pred_limit = 20):
+def calc_dist_errors(P, Y, L, dist_thres = None, min_sep = None, top_l_by_x = None, pred_limit = None):
     # The pred_limit needs to be 20 and not a very high value so a comparison with trRosetta is fair.
     #   The maximum predicted distance for a trRosetta is 20.5 but if other methods predict a higher distance
     #   they will be severely penalized, hence this cutoff.
@@ -258,15 +258,17 @@ def calc_dist_errors(P, Y, L, dist_thres = 8.0, min_sep = 24, top_l_by_x = 5, pr
 def calc_dist_errors_various_xl(P, Y, L, separation = [12, 24]):
     all_metrics = {}
     dist_thres = ['1000'] # ['08', '12']
-    topxl = {5:'Top-L/5', 2:'Top-L/2', 1:'Top-L  ', 0.001:'Top-NC '}
-    for dt in dist_thres:
-        for sep in separation:
-            for xl in topxl.keys():
-                results = calc_dist_errors(P = P, Y = Y, L = L, dist_thres = int(dt), min_sep = int(sep), top_l_by_x = xl)
-                if len(dist_thres) > 1:
-                    all_metrics["dthres: " + dt + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
-                else:
-                    all_metrics["min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
+    topxl = {5:'Top-L/5', 2:'Top-L/2', 1:'Top-L  ', 0.000001:'ALL    '}
+    pred_cutoffs = [ 20.0 ]
+    for pt in pred_cutoffs:
+        for dt in dist_thres:
+            for sep in separation:
+                for xl in topxl.keys():
+                    results = calc_dist_errors(P = P, Y = Y, L = L, dist_thres = int(dt), min_sep = int(sep), top_l_by_x = xl, pred_limit = pt)
+                    if len(dist_thres) > 1:
+                        all_metrics["prediction-cut-off: " + pt + " native-thres: " + dt + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
+                    else:
+                        all_metrics["prediction-cut-off: " + pt + " min-seq-sep: " + str(sep) + " xL: " + topxl[xl]] = results
     return all_metrics
 
 def calc_contact_errors_various_xl(CPRED, CTRUE, separation = [12, 24]):
