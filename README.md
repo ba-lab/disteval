@@ -1,7 +1,5 @@
-
-
 <p align="center">
-<img src="disteval.png" alt="DISTEVAL BANNER" width=500/>
+<img src="banner.png" alt="DISTEVAL BANNER" width=800/>
 </p>
 
 # DISTEVAL: For evaluating protein inter-residue distances
