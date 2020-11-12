@@ -484,7 +484,11 @@ elif dmap is not None:
     D = np.load(dmap)
     L = len(D)
     if D.ndim == 3:
+        print('Reshaping needed here..')
         D = D.reshape((L, L))
+    if L != len(ND):
+        print('PDB is smaller! Trimming prediction..', L, len(ND))
+        D = D[:len(ND), :len(ND)]
     C = 4.0 / (D + 0.001)
 elif truedmap:
     print('Obtaining a true distance map from the input PDB..')
