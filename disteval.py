@@ -68,17 +68,17 @@ if args.native is not None:
 if args.fasta is not None: file_fasta = os.path.abspath(args.fasta)
 if args.dmap is not None:
     dmap = os.path.abspath(args.dmap)
-    basename = os.path.basename(dmap)
+    basename = dmap
 if args.trrosetta is not None: 
     trrosetta  = os.path.abspath(args.trrosetta)
-    basename = os.path.basename(trrosetta)
+    basename = trrosetta
 if args.inputrr is not None: 
     inputrr = os.path.abspath(args.inputrr)
-    basename = os.path.basename(inputrr) 
+    basename = inputrr
 if args.ss is not None: ss = os.path.abspath(args.ss)
 if args.truedmap is True: 
     truedmap = True
-    basename = os.path.basename(native) 
+    basename = native
 if args.modeling3d is True: modeling3d = True
 
 valid_amino_acids = {
