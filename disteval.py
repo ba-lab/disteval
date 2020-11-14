@@ -634,7 +634,7 @@ def disteval_main(native=None,
             print(basename, native_basename, LDDT_k, " Cb-LDDT: ", LDDT_v)
 
     if not modeling3d:
-        sys.exit()
+        return
 
     if file_fasta is None:
         sys.exit('ERROR!! Fasta file is needed for building 3D models')
@@ -675,7 +675,7 @@ def disteval_main(native=None,
         sys.exit('ERROR!! Could not executed DISTFOLD!')
 
     if not os.path.exists(native):
-        sys.exit()
+        return
 
     print('')
     print('Run TM-score..')
