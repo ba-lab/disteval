@@ -634,12 +634,14 @@ def disteval_main(native=None,
             print(basename, native_basename, LDDT_k, " Cb-LDDT: ", LDDT_v)
 
     if not modeling3d:
-        return
+        return 0
 
     if file_fasta is None:
-        sys.exit('ERROR!! Fasta file is needed for building 3D models')
+        print('ERROR!! Fasta file is needed for building 3D models')
+        return 1
     if job_dir is None:
-        sys.exit('ERROR!! job_dir is needed for building 3D models')
+        print('ERROR!! job_dir is needed for building 3D models')
+        return 2
 
     os.system('mkdir -p ' + job_dir)
 
@@ -663,7 +665,7 @@ def disteval_main(native=None,
 
     if restraint_count < 1:
         print('ERROR!! No restraints to pass on to DISTFOLD! Exiting..')
-        sys.exit(1)
+        return 3
 
     print('')
     print('Run DISTFOLD')
@@ -675,7 +677,7 @@ def disteval_main(native=None,
         sys.exit('ERROR!! Could not executed DISTFOLD!')
 
     if not os.path.exists(native):
-        return
+        return 0
 
     print('')
     print('Run TM-score..')
