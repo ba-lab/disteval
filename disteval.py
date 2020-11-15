@@ -627,7 +627,7 @@ def disteval_main(native=None,
         LDDT_dict = {}
         for S in [0, 6, 12, 24]:
             for R in [15]:
-                LDDT_dict[f"Radius:{R:2d} min-seq-sep:{S:2d}"] = get_LDDT(
+                LDDT_dict[f"Radius:{R} min-seq-sep:{S}"] = get_LDDT(
                     ND, D, R, S)
         print('')
         print("Cb-distance map LDDT scores")
