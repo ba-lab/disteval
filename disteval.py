@@ -13,7 +13,8 @@ Options for building models:
 # ToDo: Accept .txt files
 # ToDo: For trRosetta trim predictions shorter than ND
 # ToDo: Don't check ND if no native is present
-# ToDo: if (native is not None) and (not os.path.exists(native)):
+# ToDo: if (native is not None) and (not os.path.exists(native))
+# ToDo: evaltm(TM, .., ..) TM as an additional parameter
  
 import argparse
 import sys
