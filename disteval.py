@@ -10,6 +10,10 @@ Options for building models:
     d) use distances from the PDB itself
 '''
 
+# ToDo: Accept .txt files
+# ToDo: For trRosetta trim predictions shorter than ND
+# ToDo: Don't check ND if no native is present
+
 import argparse
 import sys
 import numpy as np
