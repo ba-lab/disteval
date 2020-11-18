@@ -35,7 +35,7 @@ def get_args():
     parser.add_argument('-d', type=str, required=False, dest='dmap',
                         help="Predicted distance map as a 2D numpy array")
     parser.add_argument('-t', type=int, required=False,
-                        dest='threshold', default=8, help="Distance cutoff threshold")
+                        dest='threshold', default=12, help="Distance cutoff threshold")
     parser.add_argument('-c', type=str, required=False, dest='inputrr',
                         help="CASP RR file as input (all input rows are used)")
     parser.add_argument('-r', type=str, required=False,
