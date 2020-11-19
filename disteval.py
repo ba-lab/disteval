@@ -15,6 +15,7 @@ Options for building models:
 # ToDo: Don't check ND if no native is present
 # ToDo: if (native is not None) and (not os.path.exists(native))
 # ToDo: evaltm(TM, .., ..) TM as an additional parameter
+# ToDo: Cb-LDDT scores need to be calculated for trRosetta inputs (in the webserver)
  
 import argparse
 import sys
