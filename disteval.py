@@ -10,12 +10,7 @@ Options for building models:
     d) use distances from the PDB itself
 '''
 
-# ToDo: Accept .txt files
-# ToDo: For trRosetta trim predictions shorter than ND
 # ToDo: Don't check ND if no native is present
-# ToDo: if (native is not None) and (not os.path.exists(native))
-# ToDo: evaltm(TM, .., ..) TM as an additional parameter
-# ToDo: Cb-LDDT scores need to be calculated for trRosetta inputs (in the webserver)
  
 import argparse
 import sys
@@ -39,6 +34,8 @@ def get_args():
                         help="Predicted distance map as a 2D numpy array")
     parser.add_argument('-t', type=int, required=False,
                         dest='threshold', default=12, help="Distance cutoff threshold")
+    parser.add_argument('-x', type=str, required=False,
+                        dest='deepdist', default=12, help=".txt distance maps by DeepDist")
     parser.add_argument('-c', type=str, required=False, dest='inputrr',
                         help="CASP RR file as input (all input rows are used)")
     parser.add_argument('-r', type=str, required=False,
@@ -210,7 +207,8 @@ def calc_dist_errors(P, Y, L, dist_thres=None, min_sep=None, top_l_by_x=None, pr
     errors['mse'] = np.nan
     errors['rmse'] = np.nan
     errors['pearsonr'] = np.nan
-    errors['count'] = np.nan
+    errors['count-pred'] = np.nan
+    errors['count-true'] = np.nan
     pred_dict = {}
     true_dict = {}
     for p in range(len(Y)):
@@ -219,10 +217,10 @@ def calc_dist_errors(P, Y, L, dist_thres=None, min_sep=None, top_l_by_x=None, pr
             if np.isnan(P[p, q]): continue
             if np.isnan(Y[p, q]): continue
             if Y[p, q] >= dist_thres: continue
-            if P[p, q] >= pred_limit: continue
             if np.isnan(Y[p, q]): continue
-            pred_dict[(p, q)] = P[p, q]
             true_dict[(p, q)] = Y[p, q]
+            if P[p, q] >= pred_limit: continue
+            pred_dict[(p, q)] = P[p, q]
     xl = round(L / top_l_by_x)
     pred_list = []
     true_list = []
@@ -237,7 +235,8 @@ def calc_dist_errors(P, Y, L, dist_thres=None, min_sep=None, top_l_by_x=None, pr
         errors['mse'] = round(mean_squared_error(true_list, pred_list), 4)
         errors['rmse'] = round(sqrt(errors['mse']), 4)
         errors['pearsonr'] = round(pearsonr(true_list, pred_list)[0], 4)
-        errors['count'] = len(pred_list)
+        errors['count-pred'] = len(pred_list)
+        errors['count-true'] = len(true_dict)
     return errors
 
 def calc_dist_errors_various_xl(P, Y, L, separation=[12, 24]):
@@ -436,7 +435,7 @@ def dmap2rr(P, seq, file_rr):
             f.write("%d %d %0.2f %.2f 1.0\n" % (j+1, k+1, dmin, dmax))
     f.close()
 
-def evaltm(pred, native):
+def evaltm(TM, pred, native):
     os.system(TM + " " + pred + " " + native + \
               " | grep -e RMSD\\ of -e TM-score\\ \\ \\  -e MaxSub-score -e GDT-TS-score -e GDT-HA-score > x.tmp")
     f = open('x.tmp')
@@ -542,6 +541,7 @@ def disteval_main(native=None,
         file_fasta=None,
         dmap=None,
         trrosetta=None,
+                  deepdist=None,
         inputrr=None,
         ss=None,
         truedmap=None,
@@ -582,6 +582,14 @@ def disteval_main(native=None,
             print('PDB is smaller! Trimming prediction..', L, len(ND))
             D = D[:len(ND), :len(ND)]
             C = 4.0 / (D + 0.001)
+    elif deepdist:
+        print('Obtaining a contact map from the input TXT..')
+        D = np.loadtxt(deepdist)
+        L = len(D)
+        if ND is not None and L != len(ND):
+            print('PDB is smaller! Trimming prediction..', L, len(ND))
+            D = D[:len(ND), :len(ND)]
+        C = 4.0 / (D + 0.001)
     elif dmap is not None:
         print('Load the input 2D distance map..')
         D = np.load(dmap)
@@ -689,7 +697,7 @@ def disteval_main(native=None,
     if status != 0:
         sys.exit('ERROR!! Could not executed DISTFOLD!')
 
-    if not os.path.exists(native):
+    if (native is not None) and (not os.path.exists(native)):
         return 0
 
     print('')
@@ -699,7 +707,7 @@ def disteval_main(native=None,
     tmscores = {}
     for pdb in os.listdir('./'):
         if not pdb.endswith('pdb'): continue
-        tmscores[pdb] = evaltm(native, pdb)
+        tmscores[pdb] = evaltm(TM, native, pdb)
 
     print('')
     print("TM-score RMSD    GDT-TS MODEL")
@@ -717,6 +725,7 @@ if __name__ == "__main__":
     dmap = None
     trrosetta = None
     inputrr = None
+    deepdist = None
     ss = None
     truedmap = False
     modeling3d = False
@@ -738,6 +747,9 @@ if __name__ == "__main__":
     if args.trrosetta is not None:
         trrosetta = os.path.abspath(args.trrosetta)
         basename = trrosetta
+    if args.deepdist is not None:
+        deepdist = os.path.abspath(args.deepdist)
+        basename = deepdist
     if args.inputrr is not None:
         inputrr = os.path.abspath(args.inputrr)
         basename = inputrr
@@ -750,7 +762,7 @@ if __name__ == "__main__":
     disteval_main(native=native,
         file_fasta=file_fasta,
         dmap=dmap,
-        trrosetta=trrosetta,
+        trrosetta=trrosetta, deepdist=deepdist,
         inputrr=inputrr,
         ss=ss,
         truedmap=truedmap,
