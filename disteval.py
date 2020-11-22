@@ -570,7 +570,7 @@ def disteval_main(native=None,
         if ND is not None and L != len(ND):
             print('PDB is smaller! Trimming prediction..', L, len(ND))
             D = D[:len(ND), :len(ND)]
-            C = 4.0 / (D + 0.001)
+            C = C[:len(ND), :len(ND)]
     elif deepdist:
         print('Obtaining a contact map from the input TXT..')
         D = np.loadtxt(deepdist)
