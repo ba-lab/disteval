@@ -16,7 +16,6 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.metrics import precision_score
 from scipy.stats import pearsonr
 
-
 def get_args():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -29,7 +28,7 @@ def get_args():
     parser.add_argument('-t', type=int, required=False,
                         dest='threshold', default=12, help="Distance cutoff threshold")
     parser.add_argument('-x', type=str, required=False,
-                        dest='deepdist', default=12, help=".txt distance maps by DeepDist")
+                        dest='deepdist', help=".txt distance maps by DeepDist")
     parser.add_argument('-c', type=str, required=False, dest='inputrr',
                         help="CASP RR file as input (all input rows are used)")
     parser.add_argument('-r', type=str, required=False,
@@ -235,7 +234,7 @@ def calc_dist_errors(P, Y, L, dist_thres=None, min_sep=None, top_l_by_x=None, pr
 
 def calc_dist_errors_various_xl(P, Y, L, separation=[12, 24]):
     all_metrics = {}
-    dist_thres = ['1000']  # ['08', '12']
+    dist_thres = ['8', '12', '15', '1000']
     topxl = {5: 'Top-L/5', 2: 'Top-L/2', 1: 'Top-L  ', 0.000001: 'ALL    '}
     pred_cutoffs = [15.0] # This is taken from the LDDT's R value
     for pt in pred_cutoffs:
@@ -244,12 +243,8 @@ def calc_dist_errors_various_xl(P, Y, L, separation=[12, 24]):
                 for xl in topxl.keys():
                     results = calc_dist_errors(P=P, Y=Y, L=L, dist_thres=int(
                         dt), min_sep=int(sep), top_l_by_x=xl, pred_limit=pt)
-                    if len(dist_thres) > 1:
-                        all_metrics["prediction-cut-off:" + str(
+                    all_metrics["prediction-cut-off:" + str(
                             pt) + " native-thres:" + dt + " min-seq-sep:" + str(sep) + " xL:" + topxl[xl]] = results
-                    else:
-                        all_metrics["prediction-cut-off: " + str(
-                            pt) + " min-seq-sep:" + str(sep) + " xL:" + topxl[xl]] = results
     return all_metrics
 
 def calc_contact_errors_various_xl(CPRED, CTRUE, separation=[12, 24]):
