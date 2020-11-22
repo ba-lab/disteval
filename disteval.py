@@ -1,17 +1,11 @@
 '''
 Authors: Badri Adhikari, Jamie Lea, Bikash Shrestha, Jie Hou, and Matthew Bernardini
-University of Missouri-St. Louis, 10-25-2020
+University of Missouri-St. Louis, 11-22-2020
 
 File: Reconstruct 3D models with DISTFOLD using a predicted distance map and evaluate using TM-score
-Options for building models:
-    a) a plain 2D numpy distance map
-    b) trRosetta predicted distance map
-    c) CASP RR file
-    d) use distances from the PDB itself
+Options for building models: plain 2D numpy distance map, trRosetta .npz, CASP RR, .txt, or use distances from the PDB itself
 '''
 
-# ToDo: Don't check ND if no native is present
- 
 import argparse
 import sys
 import numpy as np
