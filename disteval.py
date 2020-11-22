@@ -578,7 +578,7 @@ def disteval_main(native=None,
         print('Load the input trRosetta prediction..')
         (D, C) = trrosetta2maps(trrosetta)
         L = len(D)
-        if L != len(ND):
+        if ND is not None and L != len(ND):
             print('PDB is smaller! Trimming prediction..', L, len(ND))
             D = D[:len(ND), :len(ND)]
             C = 4.0 / (D + 0.001)
@@ -589,7 +589,7 @@ def disteval_main(native=None,
         if D.ndim == 3:
             print('Reshaping needed here..')
             D = D.reshape((L, L))
-        if L != len(ND):
+        if ND is not None and L != len(ND):
             print('PDB is smaller! Trimming prediction..', L, len(ND))
             D = D[:len(ND), :len(ND)]
         C = 4.0 / (D + 0.001)
