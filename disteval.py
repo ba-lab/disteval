@@ -577,6 +577,11 @@ def disteval_main(native=None,
     if trrosetta is not None:
         print('Load the input trRosetta prediction..')
         (D, C) = trrosetta2maps(trrosetta)
+        L = len(D)
+        if L != len(ND):
+            print('PDB is smaller! Trimming prediction..', L, len(ND))
+            D = D[:len(ND), :len(ND)]
+            C = 4.0 / (D + 0.001)
     elif dmap is not None:
         print('Load the input 2D distance map..')
         D = np.load(dmap)
