@@ -238,6 +238,6 @@ adhikarib@umsl.edu
 University of Missouri-St. Louis  
 
 ## Published By
-Bikash Shrestha
-bsmmy@umsystem.edu
-University of Missouri-St. Louis
+Bikash Shrestha  
+bsmmy@umsystem.edu  
+University of Missouri-St. Louis  
