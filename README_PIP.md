@@ -229,9 +229,8 @@ pip install disteval
    trrosetta2maps('path_to_trRosetta_npz_file')
    ```
 
-```
-For other functions please check [https://github.com/ba-lab/disteval/blob/main/disteval.py](https://github.com/ba-lab/disteval/blob/main/disteval.py)
-```
+### For other functions 
+Please check [https://github.com/ba-lab/disteval/blob/main/disteval.py](https://github.com/ba-lab/disteval/blob/main/disteval.py)
 
 ## Contact  
 Badri Adhikari  
