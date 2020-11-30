@@ -223,14 +223,14 @@ pip install disteval
    ```
 
 ### Example 2. Convert trRosetta prediction file (.npz) file to distance map
-```bash
-   from disteval import pdp2dmap
-   
-   pdb2dmap('path_to_pdb_file')
+   ```bash
+   from disteval import trrosetta2maps
+
+   trrosetta2maps('path_to_trRosetta_npz_file')
    ```
 
 ```
-For other functions please check https://github.com/ba-lab/disteval/blob/main/disteval.py
+For other functions please check [https://github.com/ba-lab/disteval/blob/main/disteval.py](https://github.com/ba-lab/disteval/blob/main/disteval.py)
 ```
 
 ## Contact  
