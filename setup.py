@@ -5,7 +5,7 @@ with open('README_PIP.md', 'r') as fh:
 
 setuptools.setup(
     name='disteval',
-    version='0.2',
+    version='0.3',
     py_modules=['disteval'],
     author='ba-lab',
     author_email='adhikarib@umsl.edu',
