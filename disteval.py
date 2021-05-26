@@ -705,7 +705,7 @@ def disteval_main(native=None,
         (r, t, g) = tmscores[pdb[0]]
         print(f"{t:5.3f}    {r:6.3f}  {g:5.3f}  {p}")
 
-if __name__ == "__main__":
+def main():
     args = get_args()
     print(args)
 
@@ -761,3 +761,5 @@ if __name__ == "__main__":
         minsep=minsep,
         basename=basename,
         native_basename=native_basename)
+
+if __name__ == "__main__": main()
