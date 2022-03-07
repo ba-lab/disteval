@@ -207,7 +207,5 @@ Download from [https://github.com/ba-lab/disteval/releases](https://github.com/b
    0.880     1.151  0.950  1guuA_16.pdb
    ```
 
-## Contact  
-Badri Adhikari  
-adhikarib@umsl.edu  
-University of Missouri-St. Louis  
+## Paper
+2021, "DISTEVAL: a web server for evaluating predicted protein distances", [BMC Bioinformatics](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-020-03938-z)
